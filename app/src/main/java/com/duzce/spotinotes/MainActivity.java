@@ -1,7 +1,6 @@
 package com.duzce.spotinotes;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activit_main);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,new SavedNotes()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_activity_fragment_container, new SavedNotes()).commit();
         navView = findViewById(R.id.nav_view);
         navView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 if (selectedFragment != null) {
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.nav_host_fragment_activity_main, selectedFragment)
+                            .replace(R.id.main_activity_fragment_container, selectedFragment)
                             .commit();
                 }
                 return true;
