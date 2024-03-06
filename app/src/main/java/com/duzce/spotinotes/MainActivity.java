@@ -1,6 +1,12 @@
 package com.duzce.spotinotes;
 
+import static com.spotify.sdk.android.auth.AccountsQueryParameters.CLIENT_ID;
+import static com.spotify.sdk.android.auth.AccountsQueryParameters.REDIRECT_URI;
+import static com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -16,6 +22,9 @@ import com.duzce.spotinotes.ui.SavedNotes;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.spotify.sdk.android.auth.AuthorizationClient;
+import com.spotify.sdk.android.auth.AuthorizationRequest;
+import com.spotify.sdk.android.auth.AuthorizationResponse;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView navView;
@@ -61,5 +70,42 @@ public class MainActivity extends AppCompatActivity {
                 transaction.commit();
             }
         });
+
+        AuthorizationRequest.Builder builder =
+                new AuthorizationRequest.Builder(
+                        CLIENT_ID,
+                        AuthorizationResponse.Type.TOKEN,
+                        REDIRECT_URI);
+        builder.setScopes(new String[]{
+                "streaming",
+                "user-read-playback-state",
+                "user-modify-playback-state",
+                "user-read-currently-playing",
+                "app-remote-control",
+                "user-library-modify",
+                "user-library-read",
+                "user-read-email",
+                "user-read-private"});
+        AuthorizationRequest request = builder.build();
+        AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request);
+    }
+
+    // Handle redirection and get access token etc
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == REQUEST_CODE) {
+            AuthorizationResponse response = AuthorizationClient.getResponse(resultCode, intent);
+            switch (response.getType()) {
+                case TOKEN:
+                    // TODO save token
+                    Log.i("i", "token " + response.getAccessToken());
+                    break;
+                case ERROR:
+                    // TODO handle error
+                    break;
+                default:
+            }
+        }
     }
 }
