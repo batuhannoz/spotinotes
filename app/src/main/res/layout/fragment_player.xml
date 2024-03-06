@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.Player">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true">
 
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/current_song_image"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/current_track_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center"
+            android:minWidth="120dp"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_alignParentEnd="true"
+        android:paddingEnd="10dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/purple_500"
+            android:layout_gravity="center"
+            app:icon="@drawable/skip_previous"
+            android:textAlignment="center"
+            app:iconGravity="textStart"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/purple_500"
+            android:layout_gravity="center"
+            app:icon="@drawable/play_circle"
+            app:iconGravity="textStart"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/purple_500"
+            android:layout_gravity="center"
+            app:icon="@drawable/skip_next"
+            app:iconGravity="textStart"
+            style="?android:attr/borderlessButtonStyle"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

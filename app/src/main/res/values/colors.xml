@@ -3,6 +3,9 @@
     <color name="spotify_green">#1DB954</color>
     <color name="spotify_black">#191414</color>
     <color name="spotify_blue">#0C6DDF</color>
+    <color name="spotify_purple">#400073</color>
+    <color name="spotify_yellow">#CBf55C</color>
+
     <color name="spotify_soft_black">#121212</color>
     <color name="spotify_dark_grey">#232323</color>
     <color name="spotify_icon_color">#A7A7A7</color>

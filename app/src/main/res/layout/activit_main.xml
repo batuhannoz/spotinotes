@@ -35,7 +35,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/player_background"
-        android:layout_margin="@dimen/player_margin"/>
+        android:layout_margin="@dimen/player_margin"
+        android:backgroundTint="@color/purple_500"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"

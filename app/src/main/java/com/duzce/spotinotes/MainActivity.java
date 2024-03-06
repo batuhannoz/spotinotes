@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.duzce.spotinotes.ui.Player;
 import com.duzce.spotinotes.ui.Profile;
 import com.duzce.spotinotes.ui.SavedNotes;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,7 +20,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activit_main);
 
+        // Set Player
+        getSupportFragmentManager().beginTransaction().replace(R.id.player_fragment, new Player()).commit();
+        // Set default main fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.main_activity_fragment_container, new SavedNotes()).commit();
+
         navView = findViewById(R.id.nav_view);
         navView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
