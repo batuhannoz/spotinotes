@@ -2,15 +2,19 @@ package com.duzce.spotinotes;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.duzce.spotinotes.ui.CreateNote;
 import com.duzce.spotinotes.ui.Player;
 import com.duzce.spotinotes.ui.Profile;
 import com.duzce.spotinotes.ui.SavedNotes;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.player_fragment, new Player()).commit();
         // Set default main fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.main_activity_fragment_container, new SavedNotes()).commit();
-
         navView = findViewById(R.id.nav_view);
         navView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -43,6 +46,19 @@ public class MainActivity extends AppCompatActivity {
                             .commit();
                 }
                 return true;
+            }
+        });
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateNote fullScreenFragment = new CreateNote();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down, R.anim.slide_up, R.anim.slide_down);
+                transaction.add(android.R.id.content, fullScreenFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
     }
