@@ -37,29 +37,34 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@color/purple_500"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_gravity="center"
             app:icon="@drawable/skip_previous"
-            android:textAlignment="center"
+            app:iconPadding="0dp"
             app:iconGravity="textStart"
+            app:iconTint="@color/spotify_icon_color"
             style="?android:attr/borderlessButtonStyle"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@color/purple_500"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_gravity="center"
             app:icon="@drawable/play_circle"
+            app:iconPadding="0dp"
             app:iconGravity="textStart"
+            app:iconTint="@color/spotify_icon_color"
             style="?android:attr/borderlessButtonStyle"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@color/purple_500"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_gravity="center"
             app:icon="@drawable/skip_next"
+            app:iconPadding="0dp"
             app:iconGravity="textStart"
+            app:iconTint="@color/spotify_icon_color"
             style="?android:attr/borderlessButtonStyle"/>
 
     </LinearLayout>

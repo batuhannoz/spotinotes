@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activit_main);
+        setContentView(R.layout.activity_main);
 
         // Set Player
         getSupportFragmentManager().beginTransaction().replace(R.id.player_fragment, new Player()).commit();

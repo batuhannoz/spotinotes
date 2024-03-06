@@ -2,4 +2,6 @@
 <resources>
     <dimen name="player_margin_bottom">10dp</dimen>
     <dimen name="player_margin">6dp</dimen>
+    <dimen name="fab_size">64dp</dimen>
+    <dimen name="fab_icon_size">40dp</dimen>
 </resources>
