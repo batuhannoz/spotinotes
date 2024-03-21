@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/spotify_dark_grey">
@@ -14,7 +13,8 @@
         app:layout_constraintBottom_toTopOf="@id/nav_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/main_navigation"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -27,7 +27,8 @@
         app:srcCompat="@drawable/edit_note"
         app:maxImageSize="@dimen/fab_icon_size"
         app:fabSize="normal"
-        android:backgroundTint="@color/spotify_green"/>
+        android:backgroundTint="@color/spotify_green"
+        android:contentDescription="TODO" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/player_fragment"

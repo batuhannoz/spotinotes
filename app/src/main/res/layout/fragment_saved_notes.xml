@@ -6,9 +6,9 @@
     tools:context=".ui.SavedNotes"
     android:background="@color/spotify_dark_grey">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_saved_notes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="hello notes"/>
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

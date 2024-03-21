@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.duzce.spotinotes.ui.CreateNote;
 import com.duzce.spotinotes.ui.Player;
@@ -26,8 +28,11 @@ import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 public class MainActivity extends AppCompatActivity {
-    BottomNavigationView navView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,26 +42,15 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.player_fragment, new Player()).commit();
         // Set default main fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.main_activity_fragment_container, new SavedNotes()).commit();
-        navView = findViewById(R.id.nav_view);
-        navView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
-                if (item.getItemId() == R.id.navigation_saved_notes) {
-                    selectedFragment = new SavedNotes();
-                } else if (item.getItemId() == R.id.navigation_profile) {
-                    selectedFragment = new Profile();
-                }
-
-                if (selectedFragment != null) {
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.main_activity_fragment_container, selectedFragment)
-                            .commit();
-                }
-                return true;
-            }
-        });
+        // Setup navigation
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_profile,
+                R.id.navigation_saved_notes).build();
+        NavHostFragment navHostFragment = (NavHostFragment)  getSupportFragmentManager().findFragmentById(R.id.main_activity_fragment_container);
+        NavController navController = navHostFragment.getNavController();
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
