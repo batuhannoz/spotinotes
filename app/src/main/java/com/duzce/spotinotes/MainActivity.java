@@ -1,5 +1,6 @@
 package com.duzce.spotinotes;
 
+import static com.duzce.spotinotes.db.TokenManager.getAccessToken;
 import static com.spotify.sdk.android.auth.AccountsQueryParameters.CLIENT_ID;
 import static com.spotify.sdk.android.auth.AccountsQueryParameters.REDIRECT_URI;
 import static com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.i("MainActivity", "onCreate: " + getAccessToken(this));
 
         // Set Player
         getSupportFragmentManager().beginTransaction().replace(R.id.player_fragment, new Player()).commit();

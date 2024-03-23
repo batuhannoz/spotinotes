@@ -1,5 +1,7 @@
 package com.duzce.spotinotes;
 
+import static com.duzce.spotinotes.db.TokenManager.getAccessToken;
+import static com.duzce.spotinotes.db.TokenManager.saveAccessToken;
 import static com.spotify.sdk.android.auth.AccountsQueryParameters.CLIENT_ID;
 import static com.spotify.sdk.android.auth.AccountsQueryParameters.REDIRECT_URI;
 import static com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE;
@@ -16,12 +18,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.duzce.spotinotes.db.TokenManager;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
 public class LoginActivity extends AppCompatActivity {
-
     private static final String CLIENT_ID = "cb7e5dfd73d74ef4bfae3d2a42c5b6c5";
     private static final String REDIRECT_URI = "com.duzce.spotinotes://callback";
     @Override
@@ -29,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (IsLoggedIn()) {
+        if (getAccessToken(this) != null) {
             RedirectToApp();
         } else {
             Button btn = findViewById(R.id.LoginButton);
@@ -66,7 +68,11 @@ public class LoginActivity extends AppCompatActivity {
             AuthorizationResponse response = AuthorizationClient.getResponse(resultCode, intent);
             switch (response.getType()) {
                 case TOKEN:
-                    // TODO save token
+                    saveAccessToken(
+                            this,
+                            response.getAccessToken(),
+                            System.currentTimeMillis() + (response.getExpiresIn() * 100L)
+                    );
                     RedirectToApp();
                     break;
                 case ERROR:
@@ -76,13 +82,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-
     private void RedirectToApp() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-    }
-    // TODO
-    private boolean IsLoggedIn() {
-        return false;
     }
 }
