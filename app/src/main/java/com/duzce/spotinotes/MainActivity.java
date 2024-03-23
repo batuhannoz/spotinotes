@@ -40,13 +40,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Set Player
         getSupportFragmentManager().beginTransaction().replace(R.id.player_fragment, new Player()).commit();
-        // Set default main fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_activity_fragment_container, new SavedNotes()).commit();
         // Setup navigation
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_profile,
-                R.id.navigation_saved_notes).build();
-        NavHostFragment navHostFragment = (NavHostFragment)  getSupportFragmentManager().findFragmentById(R.id.main_activity_fragment_container);
+                R.id.navigation_saved_notes)
+                .build();
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_activity_fragment_container);
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -64,42 +63,5 @@ public class MainActivity extends AppCompatActivity {
                 transaction.commit();
             }
         });
-
-        AuthorizationRequest.Builder builder =
-                new AuthorizationRequest.Builder(
-                        CLIENT_ID,
-                        AuthorizationResponse.Type.TOKEN,
-                        REDIRECT_URI);
-        builder.setScopes(new String[]{
-                "streaming",
-                "user-read-playback-state",
-                "user-modify-playback-state",
-                "user-read-currently-playing",
-                "app-remote-control",
-                "user-library-modify",
-                "user-library-read",
-                "user-read-email",
-                "user-read-private"});
-        AuthorizationRequest request = builder.build();
-        AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request);
-    }
-
-    // Handle redirection and get access token etc
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == REQUEST_CODE) {
-            AuthorizationResponse response = AuthorizationClient.getResponse(resultCode, intent);
-            switch (response.getType()) {
-                case TOKEN:
-                    // TODO save token
-                    Log.i("i", "token " + response.getAccessToken());
-                    break;
-                case ERROR:
-                    // TODO handle error
-                    break;
-                default:
-            }
-        }
     }
 }
