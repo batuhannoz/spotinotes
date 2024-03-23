@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.i("MainActivity", "onCreate: " + getAccessToken(this));
-
         // Set Player
         getSupportFragmentManager().beginTransaction().replace(R.id.player_fragment, new Player()).commit();
         // Setup navigation
