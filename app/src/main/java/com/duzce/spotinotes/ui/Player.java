@@ -23,6 +23,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletionException;
 
+import jp.wasabeef.picasso.transformations.CropSquareTransformation;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import se.michaelthelin.spotify.model_objects.miscellaneous.CurrentlyPlayingContext;
 import se.michaelthelin.spotify.model_objects.specification.Track;
 
@@ -83,8 +85,12 @@ public class Player extends Fragment {
         CurrentlyPlayingContext ctx = getInformationAboutUsersCurrentPlayback_Async();
         if (ctx != null) {
             Track t = (Track) ctx.getItem();
-            Picasso.get().load(t.getAlbum().getImages()[0].getUrl()).into(CurrentTrackImage);
 
+            Picasso
+                    .get()
+                    .load(t.getAlbum().getImages()[0].getUrl())
+                    .transform(new RoundedCornersTransformation(100, 0))
+                    .into(CurrentTrackImage);
             CurrentTrackText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
             CurrentTrackText.setSelected(true);
             CurrentTrackText.setSingleLine(true);
@@ -111,6 +117,11 @@ public class Player extends Fragment {
             }
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        RefreshPlayer();
+    }
     public void DelayedRefreshPlayer() {
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -118,7 +129,7 @@ public class Player extends Fragment {
             public void run() {
                 RefreshPlayer();
             }
-        }, 500);
+        }, 200);
     }
     public static CurrentlyPlayingContext getInformationAboutUsersCurrentPlayback_Async() {
         CurrentlyPlayingContext ctx = null;
