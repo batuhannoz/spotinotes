@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,10 +84,15 @@ public class Player extends Fragment {
         if (ctx != null) {
             Track t = (Track) ctx.getItem();
             Picasso.get().load(t.getAlbum().getImages()[0].getUrl()).into(CurrentTrackImage);
+
+            CurrentTrackText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            CurrentTrackText.setSelected(true);
+            CurrentTrackText.setSingleLine(true);
             CurrentTrackText.setText(new StringBuilder()
                     .append(t.getName())
                     .append(" - ")
                     .append(t.getArtists()[0].getName()));
+
             IsPlaying = ctx.getIs_playing();
             if (IsPlaying) {
                 PlayPauseButton.setIcon(

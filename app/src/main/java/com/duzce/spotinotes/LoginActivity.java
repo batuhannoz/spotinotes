@@ -16,6 +16,8 @@ import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
+import java.sql.Time;
+
 import se.michaelthelin.spotify.SpotifyApi;
 
 public class LoginActivity extends AppCompatActivity {
@@ -54,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
     }
-
     // Handle redirection and get access token etc
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
