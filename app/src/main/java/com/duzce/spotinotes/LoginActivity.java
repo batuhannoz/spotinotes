@@ -2,8 +2,6 @@ package com.duzce.spotinotes;
 
 import static com.duzce.spotinotes.db.TokenManager.getAccessToken;
 import static com.duzce.spotinotes.db.TokenManager.saveAccessToken;
-import static com.spotify.sdk.android.auth.AccountsQueryParameters.CLIENT_ID;
-import static com.spotify.sdk.android.auth.AccountsQueryParameters.REDIRECT_URI;
 import static com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE;
 
 import android.content.Intent;
@@ -12,16 +10,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.duzce.spotinotes.db.TokenManager;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
+
+import se.michaelthelin.spotify.SpotifyApi;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String CLIENT_ID = "cb7e5dfd73d74ef4bfae3d2a42c5b6c5";

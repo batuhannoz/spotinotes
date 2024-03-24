@@ -12,11 +12,11 @@
         android:layout_alignParentStart="true">
 
         <ImageView
-            android:id="@+id/current_song_image"
+            android:id="@+id/current_track_image"
             android:layout_width="@dimen/bottom_player_size"
             android:layout_height="@dimen/bottom_player_size"
             android:layout_gravity="center"
-            android:contentDescription="TODO" />
+            android:contentDescription="TODO"/>
 
         <TextView
             android:id="@+id/current_track_text"
@@ -36,6 +36,7 @@
         android:paddingEnd="10dp">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/previous_track_button"
             android:layout_width="@dimen/player_button_size"
             android:layout_height="@dimen/player_button_size"
             android:background="?android:attr/selectableItemBackground"
@@ -48,6 +49,7 @@
             app:iconSize="34dp"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/play_pause_track_button"
             android:layout_width="@dimen/player_button_size"
             android:layout_height="@dimen/player_button_size"
             android:background="?android:attr/selectableItemBackground"
@@ -60,6 +62,7 @@
             app:iconSize="40dp"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/next_track_button"
             android:layout_width="@dimen/player_button_size"
             android:layout_height="@dimen/player_button_size"
             android:background="?android:attr/selectableItemBackground"

@@ -33,19 +33,29 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import se.michaelthelin.spotify.SpotifyApi;
+
 public class MainActivity extends AppCompatActivity {
+    public static SpotifyApi spotifyApi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create Static spotify api
+        MainActivity.spotifyApi = new SpotifyApi.Builder()
+                .setAccessToken(getAccessToken(this))
+                .build();
+
         // Set Player
         getSupportFragmentManager().beginTransaction().replace(R.id.player_fragment, new Player()).commit();
+
         // Setup navigation
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_profile,
                 R.id.navigation_saved_notes)
                 .build();
+
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_activity_fragment_container);
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView navView = findViewById(R.id.nav_view);
