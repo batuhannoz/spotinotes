@@ -44,6 +44,7 @@ public class NotesQueryClass {
     // List<Note> noteList = new QueryClass().getAllNotes(db);
 
     // Belirli bir nota göre arama yapan fonksiyon
+    @SuppressLint("Range")
     public List<Note> searchNotes(SQLiteDatabase db, String query) {
         List<Note> noteList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + Config.TABLE_NOTE + " WHERE " +
