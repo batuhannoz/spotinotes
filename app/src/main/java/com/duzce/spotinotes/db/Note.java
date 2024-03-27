@@ -12,11 +12,6 @@ public class Note {
     private String lyrics;
     private String note;
     private String notedLyrics;
-
-    public Note() {
-        // Default constructor
-    }
-
     public Note(String trackName, String trackUrl, String trackImageUrl, String artistName, String artistUrl, String previewUrl, int progressMs, String lyrics, String note, String notedLyrics) {
         this.trackName = trackName;
         this.trackUrl = trackUrl;
@@ -29,7 +24,6 @@ public class Note {
         this.note = note;
         this.notedLyrics = notedLyrics;
     }
-
     public int getId() {
         return id;
     }

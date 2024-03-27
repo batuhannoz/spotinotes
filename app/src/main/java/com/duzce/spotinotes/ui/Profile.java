@@ -2,9 +2,12 @@ package com.duzce.spotinotes.ui;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.adamratzman.spotify.javainterop.SpotifyContinuation;
+import com.adamratzman.spotify.models.SpotifyUserInformation;
 import com.duzce.spotinotes.MainActivity;
 import com.duzce.spotinotes.R;
 import com.squareup.picasso.Picasso;
@@ -20,7 +25,6 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletionException;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
-import se.michaelthelin.spotify.model_objects.specification.User;
 
 public class Profile extends Fragment {
     private ImageView ProfileImage;
@@ -39,26 +43,23 @@ public class Profile extends Fragment {
         DisplayNameText = getView().findViewById(R.id.display_name_text);
         EmailText = getView().findViewById(R.id.email_text);
 
-        User u = getCurrentUsersProfile_Async();
+        MainActivity.spotifyApi.getUsers().getClientProfile(new SpotifyContinuation<SpotifyUserInformation>() {
+            @Override
+            public void onSuccess(SpotifyUserInformation user) {
+                DisplayNameText.setText(user.getDisplayName());
+                EmailText.setText(user.getEmail());
 
-        Picasso
-                .get()
-                .load(u.getImages()[1].getUrl())
-                .placeholder(getContext().getDrawable(R.drawable.account_circle))
-                .transform(new CropCircleTransformation())
-                .into(ProfileImage);
-        DisplayNameText.setText(u.getDisplayName());
-        EmailText.setText(u.getEmail());
-    }
-    public static User getCurrentUsersProfile_Async() {
-        User user = null;
-        try {
-            user = MainActivity.spotifyApi.getCurrentUsersProfile().build().executeAsync().join();
-        } catch (CompletionException e) {
-            System.out.println("Error: " + e.getCause().getMessage());
-        } catch (CancellationException e) {
-            System.out.println("Async operation cancelled.");
-        }
-        return user;
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    Picasso
+                            .get()
+                            .load(user.getImages().get(1).getUrl())
+                            .placeholder(getResources().getDrawable(R.drawable.account_circle, null))
+                            .transform(new CropCircleTransformation())
+                            .into(ProfileImage);
+                });
+            }
+            @Override
+            public void onFailure(@NonNull Throwable throwable) {}
+        });
     }
 }

@@ -16,10 +16,6 @@ import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
-import java.sql.Time;
-
-import se.michaelthelin.spotify.SpotifyApi;
-
 public class LoginActivity extends AppCompatActivity {
     private static final String CLIENT_ID = "cb7e5dfd73d74ef4bfae3d2a42c5b6c5";
     private static final String REDIRECT_URI = "com.duzce.spotinotes://callback";

@@ -1,54 +1,67 @@
 package com.duzce.spotinotes;
 
 import static com.duzce.spotinotes.db.TokenManager.getAccessToken;
-import static com.spotify.sdk.android.auth.AccountsQueryParameters.CLIENT_ID;
-import static com.spotify.sdk.android.auth.AccountsQueryParameters.REDIRECT_URI;
-import static com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE;
 
-import android.content.Intent;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
+import androidx.fragment.app.FragmentTransaction;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
+import androidx.navigation.NavController;
+
+import com.adamratzman.spotify.SpotifyApi;
+import com.adamratzman.spotify.SpotifyApiOptions;
+import com.adamratzman.spotify.SpotifyAppApi;
+import com.adamratzman.spotify.SpotifyClientApi;
+import com.adamratzman.spotify.javainterop.SpotifyContinuation;
+import com.adamratzman.spotify.models.CurrentlyPlayingObject;
+import com.adamratzman.spotify.models.CurrentlyPlayingType;
+import com.adamratzman.spotify.models.SpotifyContext;
+import com.adamratzman.spotify.models.Token;
+import com.adamratzman.spotify.models.Track;
 import com.duzce.spotinotes.ui.CreateNote;
 import com.duzce.spotinotes.ui.Player;
-import com.duzce.spotinotes.ui.Profile;
-import com.duzce.spotinotes.ui.SavedNotes;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
-import com.spotify.sdk.android.auth.AuthorizationClient;
-import com.spotify.sdk.android.auth.AuthorizationRequest;
-import com.spotify.sdk.android.auth.AuthorizationResponse;
 
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import se.michaelthelin.spotify.SpotifyApi;
+import java.util.Collections;
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
-    public static SpotifyApi spotifyApi;
+    public static SpotifyClientApi spotifyApi;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Create Static spotify api
-        MainActivity.spotifyApi = new SpotifyApi.Builder()
-                .setAccessToken(getAccessToken(this))
-                .build();
+        spotifyApi = new SpotifyClientApi(
+                null,
+                null,
+                new Token(getAccessToken(this), "Bearer", 3600, null, null),
+                new SpotifyApiOptions()
+                );
 
         // Set Player
-        getSupportFragmentManager().beginTransaction().replace(R.id.player_fragment, new Player()).commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.player_fragment, new Player())
+                .commit();
 
         // Setup navigation
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -58,14 +71,29 @@ public class MainActivity extends AppCompatActivity {
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_activity_fragment_container);
         NavController navController = navHostFragment.getNavController();
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
+                if (navDestination.getId() == R.id.navigation_profile) {
+                    fab.animate().setDuration(300).scaleX(0).scaleY(0).alpha(1)
+                            .setInterpolator(new LinearOutSlowInInterpolator()).start();
+                    fab.setVisibility(View.INVISIBLE);
+                } else if (navDestination.getId() == R.id.navigation_saved_notes) {
+                    fab.animate().setDuration(300).scaleX(1).scaleY(1).alpha(1)
+                            .setInterpolator(new LinearOutSlowInInterpolator()).start();
+                }
+            }
+        });
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (fab.getVisibility() == View.INVISIBLE) return;
                 CreateNote fullScreenFragment = new CreateNote();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down, R.anim.slide_up, R.anim.slide_down);

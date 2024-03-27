@@ -49,6 +49,8 @@ android {
     }
 }
 
+
+
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
@@ -67,10 +69,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     // spotify libraries
     implementation 'com.spotify.android:auth:2.1.1' // auth-lib
-    implementation 'se.michaelthelin.spotify:spotify-web-api-java:8.3.6'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'jp.wasabeef:picasso-transformations:2.4.0'
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'// 3rd party api library
+    implementation "com.adamratzman:spotify-api-kotlin-core:4.1.0"
 }

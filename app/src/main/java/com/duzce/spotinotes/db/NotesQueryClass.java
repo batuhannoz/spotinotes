@@ -1,7 +1,10 @@
 package com.duzce.spotinotes.db;
 
+import static java.security.AccessController.getContext;
+
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -9,13 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotesQueryClass {
-
+    private Context context;
+    private SQLiteDatabase db;
+    public NotesQueryClass(Context context){
+        this.context = context;
+    }
     // Tüm notları listeleyen fonksiyon
     @SuppressLint("Range")
-    public List<Note> getAllNotes(SQLiteDatabase db) {
+    public List<Note> getAllNotes() {
+        SQLiteDatabase db = NotesDbHelper.getInstance(context).getWritableDatabase();
+
         List<Note> noteList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + Config.TABLE_NOTE;
-
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
@@ -45,7 +53,9 @@ public class NotesQueryClass {
 
     // Belirli bir nota göre arama yapan fonksiyon
     @SuppressLint("Range")
-    public List<Note> searchNotes(SQLiteDatabase db, String query) {
+    public List<Note> searchNotes(String query) {
+        SQLiteDatabase db = NotesDbHelper.getInstance(context).getWritableDatabase();
+
         List<Note> noteList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + Config.TABLE_NOTE + " WHERE " +
                 Config.COLUMN_TRACK_NAME + " LIKE '%" + query + "%' OR " +
@@ -81,7 +91,9 @@ public class NotesQueryClass {
     // List<Note> noteList = new QueryClass().searchNotes(db, "hello");
 
     // Yeni bir not ekleyen fonksiyon
-    public long insertNote(SQLiteDatabase db, Note note) {
+    public long insertNote(Note note) {
+        SQLiteDatabase db = NotesDbHelper.getInstance(context).getWritableDatabase();
+
         ContentValues values = new ContentValues();
         values.put(Config.COLUMN_TRACK_NAME, note.getTrackName());
         values.put(Config.COLUMN_TRACK_URL, note.getTrackUrl());
@@ -96,7 +108,6 @@ public class NotesQueryClass {
 
         return db.insert(Config.TABLE_NOTE, null, values);
     }
-
     // Kullanım örneği:
     // SQLiteDatabase db = dbHelper.getWritableDatabase();
     // Note note = new Note(...); // Yeni not nesnesi oluşturun
