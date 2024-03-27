@@ -30,7 +30,6 @@ public class Profile extends Fragment {
     private ImageView ProfileImage;
     private TextView EmailText;
     private TextView DisplayNameText;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,7 +41,11 @@ public class Profile extends Fragment {
         ProfileImage = getView().findViewById(R.id.profile_image);
         DisplayNameText = getView().findViewById(R.id.display_name_text);
         EmailText = getView().findViewById(R.id.email_text);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
         MainActivity.spotifyApi.getUsers().getClientProfile(new SpotifyContinuation<SpotifyUserInformation>() {
             @Override
             public void onSuccess(SpotifyUserInformation user) {
@@ -59,7 +62,9 @@ public class Profile extends Fragment {
                 });
             }
             @Override
-            public void onFailure(@NonNull Throwable throwable) {}
+            public void onFailure(@NonNull Throwable throwable) {
+                Log.i("TAG", "onFailure: "+throwable);
+            }
         });
     }
 }
