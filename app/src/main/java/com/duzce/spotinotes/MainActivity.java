@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create Spotify Api with Bearer Token
         spotifyApi = new SpotifyClientApi(
                 null,
                 null,
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 new SpotifyApiOptions()
                 );
 
-        // Set Player
+        // Set Player Fragment
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.player_fragment, new Player())
@@ -68,14 +69,13 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_profile,
                 R.id.navigation_saved_notes)
                 .build();
-
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_activity_fragment_container);
         NavController navController = navHostFragment.getNavController();
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        // Setup Floating Action Button
         fab = findViewById(R.id.fab);
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -83,10 +83,11 @@ public class MainActivity extends AppCompatActivity {
                 if (navDestination.getId() == R.id.navigation_profile) {
                     fab.animate().setDuration(300).scaleX(0).scaleY(0).alpha(1)
                             .setInterpolator(new LinearOutSlowInInterpolator()).start();
-                    fab.setVisibility(View.INVISIBLE);
+                    fab.setClickable(false);
                 } else if (navDestination.getId() == R.id.navigation_saved_notes) {
                     fab.animate().setDuration(300).scaleX(1).scaleY(1).alpha(1)
                             .setInterpolator(new LinearOutSlowInInterpolator()).start();
+                    fab.setClickable(true);
                 }
             }
         });

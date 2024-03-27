@@ -20,13 +20,18 @@ import com.adamratzman.spotify.javainterop.SpotifyContinuation;
 import com.adamratzman.spotify.models.CurrentlyPlayingContext;
 import com.adamratzman.spotify.models.CurrentlyPlayingObject;
 import com.adamratzman.spotify.models.CurrentlyPlayingType;
+import com.adamratzman.spotify.models.Episode;
+import com.adamratzman.spotify.models.PodcastEpisodeTrack;
 import com.adamratzman.spotify.models.Track;
 import com.duzce.spotinotes.MainActivity;
 import com.duzce.spotinotes.R;
 import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletionException;
@@ -51,12 +56,15 @@ public class Player extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
         CurrentTrackText = getView().findViewById(R.id.current_track_text);
+        CurrentTrackText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        CurrentTrackText.setSelected(true);
+        CurrentTrackText.setSingleLine(true);
         CurrentTrackImage = getView().findViewById(R.id.current_track_image);
         PlayPauseButton = getView().findViewById(R.id.play_pause_track_button);
         PreviousButton = getView().findViewById(R.id.previous_track_button);
         NextButton = getView().findViewById(R.id.next_track_button);
+        // Set click listeners for player
         PlayPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +72,7 @@ public class Player extends Fragment {
                     MainActivity.spotifyApi.getPlayer().pause(null, new SpotifyContinuation<Unit>() {
                         @Override
                         public void onSuccess(Unit unit) {
-                            DelayedRefreshPlayer();
+                            RefreshPlayer();
                         }
                         @Override
                         public void onFailure(@NonNull Throwable throwable) {}
@@ -72,7 +80,7 @@ public class Player extends Fragment {
                 } else {
                     MainActivity.spotifyApi.getPlayer().resume(null, new SpotifyContinuation<Unit>() {
                         @Override
-                        public void onSuccess(Unit unit) {DelayedRefreshPlayer();}
+                        public void onSuccess(Unit unit) {RefreshPlayer();}
                         @Override
                         public void onFailure(@NonNull Throwable throwable) {}
                     });
@@ -84,7 +92,7 @@ public class Player extends Fragment {
             public void onClick(View v) {
                 MainActivity.spotifyApi.getPlayer().skipBehind(null, new SpotifyContinuation<String>() {
                     @Override
-                    public void onSuccess(String s) {DelayedRefreshPlayer();}
+                    public void onSuccess(String s) {RefreshPlayer();}
                     @Override
                     public void onFailure(@NonNull Throwable throwable) {}
                 });
@@ -95,13 +103,12 @@ public class Player extends Fragment {
             public void onClick(View v) {
                 MainActivity.spotifyApi.getPlayer().skipForward(null, new SpotifyContinuation<String>() {
                     @Override
-                    public void onSuccess(String s) {DelayedRefreshPlayer();}
+                    public void onSuccess(String s) {RefreshPlayer();}
                     @Override
                     public void onFailure(@NonNull Throwable throwable) {return;}
                 });
             }
         });
-        RefreshPlayer();
     }
     @Override
     public void onResume() {
@@ -110,57 +117,63 @@ public class Player extends Fragment {
     }
     private void RefreshPlayer() {
         MainActivity.spotifyApi.getPlayer().getCurrentlyPlaying(
-                Collections.singletonList(CurrentlyPlayingType.Track),
+                Arrays.asList(CurrentlyPlayingType.Track, CurrentlyPlayingType.Episode),
                 null,
                 new SpotifyContinuation<CurrentlyPlayingObject>() {
                     @Override
                     public void onSuccess(CurrentlyPlayingObject ctx) {
-                        Log.i("TAG", "onSuccess: "+ctx.getItem().getAsTrack().getName());
-                        new Handler(Looper.getMainLooper()).post(() -> {
-
-                            CurrentTrackText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-                            CurrentTrackText.setSelected(true);
-                            CurrentTrackText.setSingleLine(true);
-                            CurrentTrackText.setText(new StringBuilder()
-                                    .append(ctx.getItem().getAsTrack().getName())
-                                    .append(" - ")
-                                    .append(ctx.getItem().getAsTrack().getArtists().get(1).getName()));
-                            Picasso
-                                    .get()
-                                    .load(ctx.getItem().getAsTrack().getAlbum().getImages().get(1).getUrl())
-                                    .transform(new RoundedCornersTransformation(50, 0))
-                                    .into(CurrentTrackImage);
-                        });
-                        IsPlaying = ctx.isPlaying();
-                        if (IsPlaying) {
-                            PlayPauseButton.setIcon(
-                                    ResourcesCompat.getDrawable(
-                                            getResources(),
-                                            R.drawable.pause_circle,
-                                            null)
-                            );
-                        } else {
-                            PlayPauseButton.setIcon(
-                                    ResourcesCompat.getDrawable(
-                                            getResources(),
-                                            R.drawable.play_circle,
-                                            null)
-                            );
+                        try {
+                            if (ctx.getItem().getType().equals("track")) {
+                                Track t = (Track) ctx.getItem();
+                                UpdatePlayerUI(
+                                        t.getName()
+                                                +" - "
+                                                +t.getArtists().get(0).getName(),
+                                        t.getAlbum().getImages().get(0).getUrl(),
+                                        ctx.isPlaying()
+                                );
+                            } else if (ctx.getItem().getType().equals("episode")) {
+                                Episode e = (Episode) ctx.getItem();
+                                UpdatePlayerUI(
+                                        e.getName()
+                                                +" - "
+                                                +e.getShow().getPublisher(),
+                                        e.getImages().get(0).getUrl(),
+                                        ctx.isPlaying()
+                                );
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                     @Override
                     public void onFailure(@NonNull Throwable throwable) {
-                        Log.i("TAG", "onFailure: "+ throwable);
+                        Log.i("TAG", "onFailure: " + throwable);
                     }
                 });
     }
-    public void DelayedRefreshPlayer() {
-        final Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                RefreshPlayer();
+    public void UpdatePlayerUI(String displayName, String imageUri, Boolean isPlaying) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            CurrentTrackText.setText(displayName);
+            Picasso
+                    .get()
+                    .load(imageUri)
+                    .transform(new RoundedCornersTransformation(50, 0))
+                    .into(CurrentTrackImage);
+            IsPlaying = isPlaying;
+            if (isPlaying) {
+                PlayPauseButton.setIcon(ResourcesCompat.getDrawable(
+                        getResources(),
+                        R.drawable.pause_circle,
+                        null)
+                );
+            } else {
+                PlayPauseButton.setIcon(ResourcesCompat.getDrawable(
+                        getResources(),
+                        R.drawable.play_circle,
+                        null)
+                );
             }
-        }, 50);
+        });
     }
 }
