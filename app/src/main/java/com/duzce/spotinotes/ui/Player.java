@@ -17,37 +17,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adamratzman.spotify.javainterop.SpotifyContinuation;
-import com.adamratzman.spotify.models.CurrentlyPlayingContext;
 import com.adamratzman.spotify.models.CurrentlyPlayingObject;
 import com.adamratzman.spotify.models.CurrentlyPlayingType;
 import com.adamratzman.spotify.models.Episode;
-import com.adamratzman.spotify.models.PodcastEpisodeTrack;
+import com.adamratzman.spotify.models.Playable;
 import com.adamratzman.spotify.models.Track;
 import com.duzce.spotinotes.MainActivity;
 import com.duzce.spotinotes.R;
 import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CompletionException;
 
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
-import jp.wasabeef.picasso.transformations.CropSquareTransformation;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import kotlin.Unit;
 
 public class Player extends Fragment {
-    public ImageView CurrentTrackImage;
-    public TextView CurrentTrackText;
-    public MaterialButton PlayPauseButton;
-    public MaterialButton PreviousButton;
-    public MaterialButton NextButton;
-    public boolean IsPlaying = false;
+    private ImageView CurrentTrackImage;
+    private TextView CurrentTrackText;
+    private MaterialButton PlayPauseButton;
+    private MaterialButton PreviousButton;
+    private MaterialButton NextButton;
+    private boolean IsPlaying = false;
+    public CurrentlyPlayingType currentlyPlayingType = null;
+    public Playable currentlyPlayingItem = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,50 +60,41 @@ public class Player extends Fragment {
         NextButton = getView().findViewById(R.id.next_track_button);
 
         // Set click listeners for player
-        PlayPauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (IsPlaying) {
-                    MainActivity.spotifyApi.getPlayer().pause(null, new SpotifyContinuation<Unit>() {
-                        @Override
-                        public void onSuccess(Unit unit) {
-                            RefreshPlayer();
-                        }
-                        @Override
-                        public void onFailure(@NonNull Throwable throwable) {}
-                    });
-                } else {
-                    MainActivity.spotifyApi.getPlayer().resume(null, new SpotifyContinuation<Unit>() {
-                        @Override
-                        public void onSuccess(Unit unit) {RefreshPlayer();}
-                        @Override
-                        public void onFailure(@NonNull Throwable throwable) {}
-                    });
-                }
-            }
-        });
-        PreviousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.spotifyApi.getPlayer().skipBehind(null, new SpotifyContinuation<String>() {
+        PlayPauseButton.setOnClickListener(v -> {
+            if (IsPlaying) {
+                MainActivity.spotifyApi.getPlayer().pause(null, new SpotifyContinuation<Unit>() {
                     @Override
-                    public void onSuccess(String s) {RefreshPlayer();}
+                    public void onSuccess(Unit unit) {
+                        RefreshPlayer();
+                    }
+                    @Override
+                    public void onFailure(@NonNull Throwable throwable) {}
+                });
+            } else {
+                MainActivity.spotifyApi.getPlayer().resume(null, new SpotifyContinuation<Unit>() {
+                    @Override
+                    public void onSuccess(Unit unit) {RefreshPlayer();}
                     @Override
                     public void onFailure(@NonNull Throwable throwable) {}
                 });
             }
         });
-        NextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        PreviousButton.setOnClickListener(v ->
+                MainActivity.spotifyApi.getPlayer().skipBehind(null, new SpotifyContinuation<String>() {
+                    @Override
+                    public void onSuccess(String s) {RefreshPlayer();}
+                    @Override
+                    public void onFailure(@NonNull Throwable throwable) {}
+                })
+        );
+        NextButton.setOnClickListener(v ->
                 MainActivity.spotifyApi.getPlayer().skipForward(null, new SpotifyContinuation<String>() {
                     @Override
                     public void onSuccess(String s) {RefreshPlayer();}
                     @Override
-                    public void onFailure(@NonNull Throwable throwable) {return;}
-                });
-            }
-        });
+                    public void onFailure(@NonNull Throwable throwable) {}
+                })
+        );
     }
     @Override
     public void onResume() {
@@ -123,9 +108,11 @@ public class Player extends Fragment {
                 new SpotifyContinuation<CurrentlyPlayingObject>() {
                     @Override
                     public void onSuccess(CurrentlyPlayingObject ctx) {
+                        currentlyPlayingItem = ctx.getItem();
                         try {
                             if (ctx.getItem().getType().equals("track")) {
-                                Track t = (Track) ctx.getItem();
+                                currentlyPlayingType = CurrentlyPlayingType.Track;
+                                Track t = (Track) currentlyPlayingItem;
                                 UpdatePlayerUI(
                                         t.getName()
                                                 +" - "
@@ -134,11 +121,12 @@ public class Player extends Fragment {
                                         ctx.isPlaying()
                                 );
                             } else if (ctx.getItem().getType().equals("episode")) {
-                                Episode e = (Episode) ctx.getItem();
+                                currentlyPlayingType = CurrentlyPlayingType.Episode;
+                                Episode e = (Episode) currentlyPlayingItem;
                                 UpdatePlayerUI(
                                         e.getName()
-                                                +" - "
-                                                +e.getShow().getPublisher(),
+                                                + " - "
+                                                + e.getShow().getPublisher(),
                                         e.getImages().get(0).getUrl(),
                                         ctx.isPlaying()
                                 );

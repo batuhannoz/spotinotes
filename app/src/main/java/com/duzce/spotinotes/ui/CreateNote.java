@@ -1,31 +1,92 @@
 package com.duzce.spotinotes.ui;
 
-import static android.content.ContentValues.TAG;
-
-import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
+import com.adamratzman.spotify.models.CurrentlyPlayingType;
+import com.adamratzman.spotify.models.Episode;
+import com.adamratzman.spotify.models.Track;
 import com.duzce.spotinotes.R;
+import com.duzce.spotinotes.db.Note;
 
-public class CreateNote extends Fragment {
+public class CreateNote extends DialogFragment {
+
+    SavedNotes savedNotes;
+    Player player;
+
+    public CreateNote() {}
+
+    public static CreateNote newInstance(SavedNotes savedNotes, Player player) {
+        CreateNote createNote = new CreateNote();
+        createNote.savedNotes = savedNotes;
+        createNote.player = player;
+        return createNote;
+    }
+
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_note, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.dialog_create_note, container, false);
+        Button createButton = view.findViewById(R.id.createButton);
+        Button cancelButton = view.findViewById(R.id.cancelButton);
+        createButton.setOnClickListener(v -> {
+            if (player.currentlyPlayingType == CurrentlyPlayingType.Track) {
+                Track t = (Track) player.currentlyPlayingItem;
+                savedNotes.CreateNote(new Note(
+                        t.getName(),
+                        t.getExternalUrls().get(0).getUrl(),
+                        t.getAlbum().getImages().get(0).getUrl(),
+                        t.getArtists().get(0).getName(),
+                        t.getArtists().get(0).getExternalUrls().get(0).getUrl(),
+                        t.getPreviewUrl(),
+                        t.getDurationMs(),
+                        "",
+                        "My Awsome Note",
+                        ""
+                ));
+                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show();
+            } else if (player.currentlyPlayingType == CurrentlyPlayingType.Episode) {
+                Episode e = (Episode) player.currentlyPlayingItem;
+                savedNotes.CreateNote(new Note(
+                        e.getName(),
+                        e.getExternalUrls().get(0).getUrl(),
+                        e.getImages().get(0).getUrl(),
+                        e.getShow().getPublisher(),
+                        "",
+                        e.getAudioPreviewUrl(),
+                        e.getDurationMs(),
+                        "",
+                        "My Awesome Note",
+                        ""
+                ));
+                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), " No Active Track", Toast.LENGTH_SHORT).show();
 
-        // Set the layout parameters to match the window size
-        ViewGroup.LayoutParams params = view.getLayoutParams();
-        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        view.setLayoutParams(params);
-
+            }
+        });
+        cancelButton.setOnClickListener(v -> getDialog().dismiss());
         return view;
     }
-};
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            //noinspection ConstantConditions
+            dialog.getWindow().setLayout(width, height);
+        }
+    }
+}

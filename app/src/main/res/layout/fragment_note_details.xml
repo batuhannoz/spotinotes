@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="100dp"
     android:layout_height="100dp"
-    tools:context=".ui.CreateNote"
+    tools:context=".ui.NoteDetails"
     android:background="@color/white">
 
     <TextClock
