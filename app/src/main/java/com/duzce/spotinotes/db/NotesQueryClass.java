@@ -112,4 +112,14 @@ public class NotesQueryClass {
     // SQLiteDatabase db = dbHelper.getWritableDatabase();
     // Note note = new Note(...); // Yeni not nesnesi oluşturun
     // long id = new QueryClass().insertNote(db, note);
+
+    // Belirli bir notu silmek için fonksiyon
+    public int deleteNote(int noteId) {
+        SQLiteDatabase db = NotesDbHelper.getInstance(context).getWritableDatabase();
+        return db.delete(Config.TABLE_NOTE, Config.COLUMN_ID + "=?", new String[]{String.valueOf(noteId)});
+    }
+
+    // Kullanım örneği:
+    // SQLiteDatabase db = dbHelper.getWritableDatabase();
+    // int rowsDeleted = new QueryClass().deleteNote(db, 1); // 1 numaralı notu siler
 }

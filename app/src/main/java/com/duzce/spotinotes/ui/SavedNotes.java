@@ -1,8 +1,11 @@
 package com.duzce.spotinotes.ui;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,21 +29,12 @@ public class SavedNotes extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        /*
-        List<Note> Notes = notesDb.getAllNotes();
-        notesDb.insertNote(new Note(
-                "Batuhan",
-                "Batuhan",
-                "Batuhan",
-                "Batuhan",
-                "Batuhan",
-                "Batuhan",
-                1111,
-                "Batuhan",
-                "Batuhan",
-                "Batuhan"
-                ));
-        Log.i("TAG", "onStart: "+Notes.get(1).getTrackName());
-        */
+        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view_saved_notes);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        List<Note> noteList = notesDb.getAllNotes();
+
+        SavedNotesAdapter adapter = new SavedNotesAdapter(noteList);
+        recyclerView.setAdapter(adapter);
     }
 }
