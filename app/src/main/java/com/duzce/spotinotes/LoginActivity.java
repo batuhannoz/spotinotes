@@ -17,8 +17,11 @@ import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
 public class LoginActivity extends AppCompatActivity {
+
     private static final String CLIENT_ID = "cb7e5dfd73d74ef4bfae3d2a42c5b6c5";
+
     private static final String REDIRECT_URI = "com.duzce.spotinotes://callback";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
     }
+
     // Handle redirection and get access token etc
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -71,8 +75,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
     private void RedirectToApp() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
+
     }
+
 }
