@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,9 +37,15 @@ public class CreateNote extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_create_note, container, false);
-        Button createButton = view.findViewById(R.id.createButton);
-        Button cancelButton = view.findViewById(R.id.cancelButton);
+        Button createButton = view.findViewById(R.id.create_button);
+        Button cancelButton = view.findViewById(R.id.cancel_button);
+        EditText noteText = view.findViewById(R.id.note_text);
         createButton.setOnClickListener(v -> {
+            String note = noteText.getText().toString();
+            if (note.isEmpty()) {
+                Toast.makeText(getContext(), "Note field cannot be empty\n", Toast.LENGTH_SHORT).show();
+                return;
+            }
             if (player.currentlyPlayingType == CurrentlyPlayingType.Track) {
                 Track t = (Track) player.currentlyPlayingItem;
                 savedNotes.CreateNote(new Note(
@@ -50,7 +57,7 @@ public class CreateNote extends DialogFragment {
                         t.getPreviewUrl(),
                         t.getDurationMs(),
                         "",
-                        "My Awsome Note",
+                        note,
                         ""
                 ));
                 Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show();
@@ -65,13 +72,12 @@ public class CreateNote extends DialogFragment {
                         e.getAudioPreviewUrl(),
                         e.getDurationMs(),
                         "",
-                        "My Awesome Note",
+                        note,
                         ""
                 ));
                 Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getContext(), " No Active Track", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getContext(), "No Active Track", Toast.LENGTH_SHORT).show();
             }
         });
         cancelButton.setOnClickListener(v -> getDialog().dismiss());

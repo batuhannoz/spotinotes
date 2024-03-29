@@ -24,12 +24,3 @@ public class NoteDetails extends Fragment {
         return view;
     }
 }
-
-/*
-    NoteDetails fullScreenFragment = new NoteDetails();
-    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-    transaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down, R.anim.slide_up, R.anim.slide_down);
-    transaction.add(android.R.id.content, fullScreenFragment);
-    transaction.addToBackStack(null);
-    transaction.commit();
-*/

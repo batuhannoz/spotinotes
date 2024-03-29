@@ -12,11 +12,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.duzce.spotinotes.R;
 import com.duzce.spotinotes.db.Note;
 import com.duzce.spotinotes.db.NotesQueryClass;
+import com.duzce.spotinotes.ui.NoteDetails;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -41,7 +45,7 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<SavedNotesAdapter.No
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_item_note, parent, false);
-        return new NoteViewHolder(view);
+        return new NoteViewHolder(view, ((FragmentActivity)context).getSupportFragmentManager());
     }
 
     @Override
@@ -87,8 +91,16 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<SavedNotesAdapter.No
         Button deleteNoteButton;
         ImageView savedNoteImageView;
 
-        NoteViewHolder(@NonNull View itemView) {
+        NoteViewHolder(@NonNull View itemView, FragmentManager fragmentManager) {
             super(itemView);
+            itemView.setOnClickListener(v -> {
+                NoteDetails fullScreenFragment = new NoteDetails();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down, R.anim.slide_up, R.anim.slide_down);
+                transaction.add(android.R.id.content, fullScreenFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            });
             savedNoteImageView = itemView.findViewById(R.id.saved_note_image_view);
             trackNameTextView = itemView.findViewById(R.id.track_name_text_view);
             artistNameTextView = itemView.findViewById(R.id.artist_name_text_view);

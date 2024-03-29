@@ -101,6 +101,9 @@ public class Player extends Fragment {
         super.onResume();
         RefreshPlayer();
     }
+
+    // TODO make player disappear when no track is playing
+    // TODO refresh player automatically
     private void RefreshPlayer() {
         MainActivity.spotifyApi.getPlayer().getCurrentlyPlaying(
                 Arrays.asList(CurrentlyPlayingType.Track, CurrentlyPlayingType.Episode),

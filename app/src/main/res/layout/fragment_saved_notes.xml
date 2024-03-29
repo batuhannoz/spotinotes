@@ -11,7 +11,11 @@
         android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ara..." />
+        android:layout_margin="4dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/spotify_icon_color"
+        android:hint="Ara..."
+        android:backgroundTint="@color/spotify_icon_color" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_saved_notes"

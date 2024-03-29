@@ -4,8 +4,6 @@ import static com.duzce.spotinotes.db.TokenManager.getAccessToken;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
@@ -20,7 +18,6 @@ import com.duzce.spotinotes.ui.SavedNotes;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
