@@ -28,27 +28,24 @@ public class LoginActivity extends AppCompatActivity {
             RedirectToApp();
         } else {
             Button btn = findViewById(R.id.LoginButton);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AuthorizationRequest.Builder builder =
-                            new AuthorizationRequest.Builder(
-                                    CLIENT_ID,
-                                    AuthorizationResponse.Type.TOKEN,
-                                    REDIRECT_URI);
-                    builder.setScopes(new String[]{
-                            "streaming",
-                            "user-read-playback-state",
-                            "user-modify-playback-state",
-                            "user-read-currently-playing",
-                            "app-remote-control",
-                            "user-library-modify",
-                            "user-library-read",
-                            "user-read-email",
-                            "user-read-private"});
-                    AuthorizationRequest request = builder.build();
-                    AuthorizationClient.openLoginActivity(LoginActivity.this, REQUEST_CODE, request);
-                }
+            btn.setOnClickListener(v -> {
+                AuthorizationRequest.Builder builder =
+                        new AuthorizationRequest.Builder(
+                                CLIENT_ID,
+                                AuthorizationResponse.Type.TOKEN,
+                                REDIRECT_URI);
+                builder.setScopes(new String[]{
+                        "streaming",
+                        "user-read-playback-state",
+                        "user-modify-playback-state",
+                        "user-read-currently-playing",
+                        "app-remote-control",
+                        "user-library-modify",
+                        "user-library-read",
+                        "user-read-email",
+                        "user-read-private"});
+                AuthorizationRequest request = builder.build();
+                AuthorizationClient.openLoginActivity(LoginActivity.this, REQUEST_CODE, request);
             });
         }
     }
