@@ -5,16 +5,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class NotesDbHelper extends SQLiteOpenHelper {
+
     private static NotesDbHelper notesDbHelper;
+
     public NotesDbHelper(Context context) {
         super(context, Config.DATABASE_NAME, null, 1);
     }
+
     public static synchronized NotesDbHelper getInstance(Context context){
         if(notesDbHelper == null){
             notesDbHelper = new NotesDbHelper(context);
         }
         return notesDbHelper;
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTableQuery = "CREATE TABLE " + Config.TABLE_NOTE + " (" +
@@ -32,6 +36,7 @@ public class NotesDbHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createTableQuery);
     }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + Config.TABLE_NOTE);

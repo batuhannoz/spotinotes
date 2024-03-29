@@ -43,7 +43,7 @@ public class CreateNote extends DialogFragment {
         createButton.setOnClickListener(v -> {
             String note = noteText.getText().toString();
             if (note.isEmpty()) {
-                Toast.makeText(getContext(), "Note field cannot be empty\n", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Note field cannot be empty", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (player.currentlyPlayingType == CurrentlyPlayingType.Track) {

@@ -108,4 +108,5 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<SavedNotesAdapter.No
             deleteNoteButton = itemView.findViewById(R.id.deleteNoteButton);
         }
     }
+
 }

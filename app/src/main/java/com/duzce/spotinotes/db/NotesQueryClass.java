@@ -12,12 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotesQueryClass {
+
     private Context context;
+
     private SQLiteDatabase db;
+
     public NotesQueryClass(Context context){
         this.context = context;
     }
-    // Tüm notları listeleyen fonksiyon
+
     @SuppressLint("Range")
     public List<Note> getAllNotes() {
         SQLiteDatabase db = NotesDbHelper.getInstance(context).getWritableDatabase();
@@ -47,11 +50,6 @@ public class NotesQueryClass {
         return noteList;
     }
 
-    // Kullanım örneği:
-    // SQLiteDatabase db = dbHelper.getReadableDatabase();
-    // List<Note> noteList = new QueryClass().getAllNotes(db);
-
-    // Belirli bir nota göre arama yapan fonksiyon
     @SuppressLint("Range")
     public List<Note> searchNotes(String query) {
         SQLiteDatabase db = NotesDbHelper.getInstance(context).getWritableDatabase();
@@ -86,11 +84,6 @@ public class NotesQueryClass {
         return noteList;
     }
 
-    // Kullanım örneği:
-    // SQLiteDatabase db = dbHelper.getReadableDatabase();
-    // List<Note> noteList = new QueryClass().searchNotes(db, "hello");
-
-    // Yeni bir not ekleyen fonksiyon
     public long insertNote(Note note) {
         SQLiteDatabase db = NotesDbHelper.getInstance(context).getWritableDatabase();
 
@@ -108,18 +101,10 @@ public class NotesQueryClass {
 
         return db.insert(Config.TABLE_NOTE, null, values);
     }
-    // Kullanım örneği:
-    // SQLiteDatabase db = dbHelper.getWritableDatabase();
-    // Note note = new Note(...); // Yeni not nesnesi oluşturun
-    // long id = new QueryClass().insertNote(db, note);
 
-    // Belirli bir notu silmek için fonksiyon
     public int deleteNote(int noteId) {
         SQLiteDatabase db = NotesDbHelper.getInstance(context).getWritableDatabase();
         return db.delete(Config.TABLE_NOTE, Config.COLUMN_ID + "=?", new String[]{String.valueOf(noteId)});
     }
 
-    // Kullanım örneği:
-    // SQLiteDatabase db = dbHelper.getWritableDatabase();
-    // int rowsDeleted = new QueryClass().deleteNote(db, 1); // 1 numaralı notu siler
 }
