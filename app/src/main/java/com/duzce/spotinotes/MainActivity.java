@@ -24,10 +24,15 @@ import androidx.navigation.ui.NavigationUI;
 
 
 public class MainActivity extends AppCompatActivity {
+
     public static SpotifyClientApi spotifyApi;
+
     private FloatingActionButton fab;
+
     private Player player;
+
     private NavHostFragment navHostFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,4 +84,5 @@ public class MainActivity extends AppCompatActivity {
             createNote.show(getSupportFragmentManager(), "Create Note");
         });
     }
+
 }
