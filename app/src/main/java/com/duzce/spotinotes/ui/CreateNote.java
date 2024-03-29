@@ -75,6 +75,7 @@ public class CreateNote extends DialogFragment {
                         note,
                         ""
                 ));
+                getDialog().dismiss();
                 Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "No Active Track", Toast.LENGTH_SHORT).show();
