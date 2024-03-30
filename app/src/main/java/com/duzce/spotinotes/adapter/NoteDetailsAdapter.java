@@ -1,19 +1,14 @@
 package com.duzce.spotinotes.adapter;
 
 import android.content.Context;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +22,7 @@ import java.util.List;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
-public class SavedNotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
+public class NoteDetailsAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     private Context context;
 
@@ -35,9 +30,15 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     private NotesQueryClass notesDb;
 
-    public SavedNotesAdapter(Context context, List<Note> noteList) {
+    private SavedNotesAdapter parentAdapter;
+
+    private NoteDetails noteDetails;
+
+    public NoteDetailsAdapter(Context context, List<Note> noteList, SavedNotesAdapter parentAdapter, NoteDetails noteDetails) {
         this.context = context;
         this.noteList = noteList;
+        this.parentAdapter = parentAdapter;
+        this.noteDetails = noteDetails;
         notesDb = new NotesQueryClass(context);
     }
 
@@ -74,6 +75,7 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
                         if(count>0) {
                             noteList.remove(holder.getLayoutPosition());
                             notifyItemRemoved(holder.getLayoutPosition());
+
                             Toast.makeText(context, "Note deleted successfully", Toast.LENGTH_SHORT).show(); // TODO
                         } else
                             Toast.makeText(context, "Note not deleted. Something wrong!", Toast.LENGTH_SHORT).show(); // TODO
@@ -85,12 +87,8 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         });
 
         holder.itemView.setOnClickListener(v -> {
-            NoteDetails noteDetails = new NoteDetails(note, notesDb, this);
-            FragmentTransaction transaction = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down, R.anim.slide_up, R.anim.slide_down);
-            transaction.add(android.R.id.content, noteDetails);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            noteDetails.setNote(note);
+            noteDetails.onStart();
         });
     }
 

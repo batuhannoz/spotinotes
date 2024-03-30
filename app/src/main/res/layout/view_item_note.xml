@@ -7,7 +7,6 @@
     app:cardElevation="8dp"
     android:layout_margin="5dp"
     android:backgroundTint="@color/spotify_dark_grey">
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

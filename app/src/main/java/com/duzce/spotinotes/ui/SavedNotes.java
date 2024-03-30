@@ -22,16 +22,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SavedNotes extends Fragment {
+
     private NotesQueryClass notesDb;
+
     private EditText searchEditText;
+
     private SavedNotesAdapter adapter;
+
     private RecyclerView recyclerView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         notesDb = new NotesQueryClass(getContext());
         return inflater.inflate(R.layout.fragment_saved_notes, container, false);
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -80,4 +86,5 @@ public class SavedNotes extends Fragment {
         adapter.notifyItemInserted(adapter.getItemCount());
         recyclerView.smoothScrollToPosition(adapter.getItemCount());
     }
+
 }

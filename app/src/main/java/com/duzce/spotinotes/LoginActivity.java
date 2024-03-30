@@ -64,12 +64,12 @@ public class LoginActivity extends AppCompatActivity {
                     saveAccessToken(
                             this,
                             response.getAccessToken(),
-                            System.currentTimeMillis() + (response.getExpiresIn() * 100L)
+                            System.currentTimeMillis() + (response.getExpiresIn() * 100)
                     );
                     RedirectToApp();
                     break;
                 case ERROR:
-                    Log.d("TAG", "onActivityResult: "+ response.getError());
+                    // TODO
                     break;
                 default:
             }
@@ -79,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
     private void RedirectToApp() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-
     }
 
 }

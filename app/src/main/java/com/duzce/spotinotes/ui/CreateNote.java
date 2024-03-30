@@ -43,7 +43,7 @@ public class CreateNote extends DialogFragment {
         createButton.setOnClickListener(v -> {
             String note = noteText.getText().toString();
             if (note.isEmpty()) {
-                Toast.makeText(getContext(), "Note field cannot be empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Note field cannot be empty", Toast.LENGTH_SHORT).show(); // TODO
                 return;
             }
             if (player.currentlyPlayingType == CurrentlyPlayingType.Track) {
@@ -61,7 +61,7 @@ public class CreateNote extends DialogFragment {
                         ""
                 ));
                 getDialog().dismiss();
-                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show(); // TODO
             } else if (player.currentlyPlayingType == CurrentlyPlayingType.Episode) {
                 Episode e = (Episode) player.currentlyPlayingItem;
                 savedNotes.CreateNote(new Note(
@@ -77,9 +77,9 @@ public class CreateNote extends DialogFragment {
                         ""
                 ));
                 getDialog().dismiss();
-                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show(); // TODO
             } else {
-                Toast.makeText(getContext(), "No Active Track", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No Active Track", Toast.LENGTH_SHORT).show(); // TODO
             }
         });
         cancelButton.setOnClickListener(v -> getDialog().dismiss());
@@ -93,7 +93,6 @@ public class CreateNote extends DialogFragment {
         if (dialog != null) {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            //noinspection ConstantConditions
             dialog.getWindow().setLayout(width, height);
         }
     }

@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(v -> {
             SavedNotes savedNotes = (SavedNotes) navHostFragment.getChildFragmentManager().getFragments().get(0);
             CreateNote createNote = CreateNote.newInstance(savedNotes, player);
-            createNote.show(getSupportFragmentManager(), "Create Note");
+            createNote.show(getSupportFragmentManager(), "Create Note"); // TODO
         });
     }
 
