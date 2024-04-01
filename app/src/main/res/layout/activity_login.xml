@@ -9,8 +9,7 @@
         android:id="@+id/LoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log in with Spotify"
-        android:drawableStart="@drawable/spotify_logo"
+        android:drawableStart="@drawable/spotify_logo_white_background"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,6 +19,7 @@
         android:background="@drawable/rounded_login_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/spotify_green"/>
+        android:backgroundTint="@color/spotify_green"
+        android:text="Log in with Spotify" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
