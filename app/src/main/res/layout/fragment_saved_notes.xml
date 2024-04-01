@@ -23,6 +23,7 @@
         android:layout_height="match_parent"
         android:paddingBottom="200dp"
         android:clipToPadding="false"
-        android:scrollbarStyle="outsideOverlay" />
+        android:scrollbarStyle="outsideOverlay"
+        tools:listitem="@layout/view_item_note"/>
 
 </LinearLayout>

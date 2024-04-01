@@ -2,8 +2,11 @@ package com.duzce.spotinotes;
 
 import static com.duzce.spotinotes.db.TokenManager.getAccessToken;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
@@ -79,8 +82,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         fab.setOnClickListener(v -> {
+            if (player.currentlyPlayingType == null) {
+                Toast.makeText(getApplicationContext(), "No Active Track", Toast.LENGTH_SHORT).show(); // TODO
+                return;
+            }
             SavedNotes savedNotes = (SavedNotes) navHostFragment.getChildFragmentManager().getFragments().get(0);
-            CreateNote createNote = CreateNote.newInstance(savedNotes, player);
+            CreateNote createNote = new CreateNote(savedNotes, player);
             createNote.show(getSupportFragmentManager(), "Create Note"); // TODO
         });
     }

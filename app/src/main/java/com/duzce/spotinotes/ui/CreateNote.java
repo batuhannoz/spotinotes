@@ -26,11 +26,10 @@ public class CreateNote extends DialogFragment {
 
     public CreateNote() {}
 
-    public static CreateNote newInstance(SavedNotes savedNotes, Player player) {
+    public CreateNote(SavedNotes savedNotes, Player player) {
         CreateNote createNote = new CreateNote();
-        createNote.savedNotes = savedNotes;
-        createNote.player = player;
-        return createNote;
+        this.savedNotes = savedNotes;
+        this.player = player;
     }
 
     @Nullable
@@ -78,8 +77,6 @@ public class CreateNote extends DialogFragment {
                 ));
                 getDialog().dismiss();
                 Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show(); // TODO
-            } else {
-                Toast.makeText(getContext(), "No Active Track", Toast.LENGTH_SHORT).show(); // TODO
             }
         });
         cancelButton.setOnClickListener(v -> getDialog().dismiss());

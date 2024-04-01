@@ -1,7 +1,10 @@
 package com.duzce.spotinotes.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,9 +49,13 @@ public class NoteDetails extends Fragment {
 
     private TextView detailedNoteTextView;
 
+    private TextView detailedoteDateTimeTextView;
+
     private NoteDetailsAdapter adapter;
 
     private SavedNotesAdapter parentAdapter;
+
+
 
 
 
@@ -83,6 +90,7 @@ public class NoteDetails extends Fragment {
         detailedNoteNameTextView = getView().findViewById(R.id.detailed_note_name_text_view);
         detailedNoteArtistTextView = getView().findViewById(R.id.detailed_note_artist_text_view);
         detailedNoteTextView = getView().findViewById(R.id.detailed_note_text_view);
+        detailedoteDateTimeTextView = getView().findViewById(R.id.detailed_note_date_time_text_view);
 
         Picasso
                 .get()
@@ -99,15 +107,30 @@ public class NoteDetails extends Fragment {
         List<Note> noteList = parentAdapter.noteList.stream().filter(
                 note ->
                         note.getId() != this.note.getId() &&
-                                ( Objects.equals(note.getTrackName(), this.note.getTrackName())) ||
-                                Objects.equals(note.getArtistName(), this.note.getArtistName()) )
+                                (Objects.equals(note.getTrackName(), this.note.getTrackName()) ||
+                                        Objects.equals(note.getArtistName(), this.note.getArtistName())))
                 .collect(Collectors.toList());
 
         adapter = new NoteDetailsAdapter(getContext(), noteList, parentAdapter, this);
 
         recyclerView.setAdapter(adapter);
 
-        openWithSpotifyButton.setOnClickListener(v -> Toast.makeText(getContext(), "Hello", Toast.LENGTH_SHORT).show());
+        openWithSpotifyButton.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            alertDialogBuilder.setMessage("You will be directed to the spotify application to open the song."); // TODO
+            alertDialogBuilder.setPositiveButton("Redirect", // TODO
+                    (arg0, arg1) -> {
+                        final String spotifyContent = note.getTrackUrl();
+                        final String branchLink = "https://spotify.link/content_linking?~campaign=" + getContext().getPackageName() + "&$deeplink_path=" + spotifyContent + "&$fallback_url=" + spotifyContent;
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(branchLink));
+                        startActivity(intent);
+                    }
+            );
+            alertDialogBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()); // TODO
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        });
     }
 
     @Override
