@@ -42,7 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/detailed_note_image_view"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Track Name"/>
+            tools:text="Track Name" />
 
         <TextView
             android:id="@+id/detailed_note_artist_text_view"
@@ -79,9 +79,25 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/spotify_logo_green_background"
+            app:layout_constraintBottom_toBottomOf="@+id/detailed_note_image_view"
+            app:layout_constraintEnd_toStartOf="@id/share_note_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/share_note_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="20dp"
+            android:background="@android:color/transparent"
+            android:drawableTint="@color/white"
+            app:icon="@drawable/share"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="28dp"
+            app:iconTint="@color/spotify_icon_color"
             app:layout_constraintBottom_toBottomOf="@+id/detailed_note_image_view"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -94,12 +110,11 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="15dp"
             android:minHeight="75dp"
-            android:text="Note"
+            tools:text="Note"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/other_notes_text_view"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailed_note_image_view" />
 
@@ -111,24 +126,24 @@
             android:text="Saved notes with same song or artist"
             android:textAlignment="center"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/line_view" />
+            app:layout_constraintBottom_toBottomOf="@+id/line_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <View
             android:id="@+id/line_view"
-            app:layout_constraintTop_toBottomOf="@+id/other_notes_text_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
-            android:layout_marginEnd="6dp"
-            android:layout_marginStart="6dp"
             android:layout_height="1dp"
             android:layout_marginVertical="8dp"
-            android:background="@color/white" />
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/other_notes_text_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

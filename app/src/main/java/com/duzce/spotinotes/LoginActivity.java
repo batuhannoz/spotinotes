@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                     saveAccessToken(
                             this,
                             response.getAccessToken(),
-                            System.currentTimeMillis() + (response.getExpiresIn() * 100)
+                            System.currentTimeMillis() + (response.getExpiresIn() * 10000)
                     );
                     RedirectToApp();
                     break;

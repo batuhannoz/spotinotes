@@ -41,6 +41,8 @@ public class NoteDetails extends Fragment {
 
     private Button openWithSpotifyButton;
 
+    private Button shareNoteButton;
+
     private ImageView detailedNoteImageView;
 
     private TextView detailedNoteNameTextView;
@@ -91,6 +93,7 @@ public class NoteDetails extends Fragment {
         detailedNoteArtistTextView = getView().findViewById(R.id.detailed_note_artist_text_view);
         detailedNoteTextView = getView().findViewById(R.id.detailed_note_text_view);
         detailedoteDateTimeTextView = getView().findViewById(R.id.detailed_note_date_time_text_view);
+        shareNoteButton = getView().findViewById(R.id.share_note_button);
 
         Picasso
                 .get()
@@ -130,6 +133,16 @@ public class NoteDetails extends Fragment {
             alertDialogBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()); // TODO
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
+        });
+
+        shareNoteButton.setOnClickListener(v -> {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, note.getNote()); // TODO
+            sendIntent.setType("text/plain");
+
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
         });
     }
 
