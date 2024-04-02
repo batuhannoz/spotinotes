@@ -15,4 +15,4 @@ public class Config {
     public static final String COLUMN_LYRICS = "lyrics";
     public static final String COLUMN_NOTE = "note";
     public static final String COLUMN_NOTED_LYRICS = "noted_lyrics";
-}
+    public static final String COLUMN_NOTED_DATETIME = "noted_datetime";}

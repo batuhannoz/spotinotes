@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class NotesQueryClass {
@@ -40,7 +41,8 @@ public class NotesQueryClass {
                         cursor.getInt(cursor.getColumnIndex(Config.COLUMN_PROGRESS_MS)),
                         cursor.getString(cursor.getColumnIndex(Config.COLUMN_LYRICS)),
                         cursor.getString(cursor.getColumnIndex(Config.COLUMN_NOTE)),
-                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_NOTED_LYRICS))
+                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_NOTED_LYRICS)),
+                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_NOTED_DATETIME))
                 );
                 note.setId(cursor.getInt(cursor.getColumnIndex(Config.COLUMN_ID)));
                 noteList.add(note);
@@ -74,7 +76,8 @@ public class NotesQueryClass {
                         cursor.getInt(cursor.getColumnIndex(Config.COLUMN_PROGRESS_MS)),
                         cursor.getString(cursor.getColumnIndex(Config.COLUMN_LYRICS)),
                         cursor.getString(cursor.getColumnIndex(Config.COLUMN_NOTE)),
-                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_NOTED_LYRICS))
+                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_NOTED_LYRICS)),
+                        cursor.getString(cursor.getColumnIndex((Config.COLUMN_NOTED_DATETIME)))
                 );
                 note.setId(cursor.getInt(cursor.getColumnIndex(Config.COLUMN_ID)));
                 noteList.add(note);
@@ -98,39 +101,9 @@ public class NotesQueryClass {
         values.put(Config.COLUMN_LYRICS, note.getLyrics());
         values.put(Config.COLUMN_NOTE, note.getNote());
         values.put(Config.COLUMN_NOTED_LYRICS, note.getNotedLyrics());
+        values.put(Config.COLUMN_NOTED_DATETIME, note.getNotedDateTime().toString());
 
         return db.insert(Config.TABLE_NOTE, null, values);
-    }
-
-    @SuppressLint("Range")
-    public List<Note> getTracksByName(String trackName) {
-        SQLiteDatabase db = NotesDbHelper.getInstance(context).getWritableDatabase();
-
-        List<Note> noteList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + Config.TABLE_NOTE + " WHERE " +
-                Config.COLUMN_TRACK_NAME + " = ?";
-
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{trackName});
-        if (cursor.moveToFirst()) {
-            do {
-                Note note = new Note(
-                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_TRACK_NAME)),
-                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_TRACK_URL)),
-                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_TRACK_IMAGE_URL)),
-                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_ARTIST_NAME)),
-                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_ARTIST_URL)),
-                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_PREVIEW_URL)),
-                        cursor.getInt(cursor.getColumnIndex(Config.COLUMN_PROGRESS_MS)),
-                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_LYRICS)),
-                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_NOTE)),
-                        cursor.getString(cursor.getColumnIndex(Config.COLUMN_NOTED_LYRICS))
-                );
-                note.setId(cursor.getInt(cursor.getColumnIndex(Config.COLUMN_ID)));
-                noteList.add(note);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return noteList;
     }
 
     public int deleteNote(int noteId) {

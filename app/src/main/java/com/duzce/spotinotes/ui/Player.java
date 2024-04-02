@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.adamratzman.spotify.SpotifyException;
 import com.adamratzman.spotify.javainterop.SpotifyContinuation;
 import com.adamratzman.spotify.models.CurrentlyPlayingObject;
 import com.adamratzman.spotify.models.CurrentlyPlayingType;
@@ -68,14 +69,18 @@ public class Player extends Fragment {
                         RefreshPlayer();
                     }
                     @Override
-                    public void onFailure(@NonNull Throwable throwable) {}
+                    public void onFailure(@NonNull Throwable throwable) {
+                        Log.i("TAG", "onFailure: "+throwable );
+                    }
                 });
             } else {
                 MainActivity.spotifyApi.getPlayer().resume(null, new SpotifyContinuation<Unit>() {
                     @Override
                     public void onSuccess(Unit unit) {RefreshPlayer();}
                     @Override
-                    public void onFailure(@NonNull Throwable throwable) {}
+                    public void onFailure(@NonNull Throwable throwable) {
+                        Log.i("TAG", "onFailure: "+(throwable.getClass() == SpotifyException.BadRequestException.class) );
+                    }
                 });
             }
         });
@@ -84,7 +89,9 @@ public class Player extends Fragment {
                     @Override
                     public void onSuccess(String s) {RefreshPlayer();}
                     @Override
-                    public void onFailure(@NonNull Throwable throwable) {}
+                    public void onFailure(@NonNull Throwable throwable) {
+                        Log.i("TAG", "onFailure: "+throwable);
+                    }
                 })
         );
         NextButton.setOnClickListener(v ->
@@ -92,7 +99,9 @@ public class Player extends Fragment {
                     @Override
                     public void onSuccess(String s) {RefreshPlayer();}
                     @Override
-                    public void onFailure(@NonNull Throwable throwable) {}
+                    public void onFailure(@NonNull Throwable throwable) {
+                        Log.i("TAG", "onFailure: "+throwable);
+                    }
                 })
         );
     }

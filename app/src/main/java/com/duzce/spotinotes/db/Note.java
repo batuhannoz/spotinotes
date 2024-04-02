@@ -1,5 +1,7 @@
 package com.duzce.spotinotes.db;
 
+import java.util.Date;
+
 public class Note {
 
     private int id;
@@ -24,7 +26,9 @@ public class Note {
 
     private String notedLyrics;
 
-    public Note(String trackName, String trackUrl, String trackImageUrl, String artistName, String artistUrl, String previewUrl, int progressMs, String lyrics, String note, String notedLyrics) {
+    private String notedDateTime;
+
+    public Note(String trackName, String trackUrl, String trackImageUrl, String artistName, String artistUrl, String previewUrl, int progressMs, String lyrics, String note, String notedLyrics, String notedDateTime) {
         this.trackName = trackName;
         this.trackUrl = trackUrl;
         this.trackImageUrl = trackImageUrl;
@@ -35,6 +39,7 @@ public class Note {
         this.lyrics = lyrics;
         this.note = note;
         this.notedLyrics = notedLyrics;
+        this.notedDateTime = notedDateTime;
     }
 
     public int getId() {
@@ -123,6 +128,14 @@ public class Note {
 
     public void setNotedLyrics(String notedLyrics) {
         this.notedLyrics = notedLyrics;
+    }
+
+    public String getNotedDateTime() {
+        return notedDateTime;
+    }
+
+    public void setNotedDateTime(String notedDateTime) {
+        this.notedDateTime = notedDateTime;
     }
 
 }

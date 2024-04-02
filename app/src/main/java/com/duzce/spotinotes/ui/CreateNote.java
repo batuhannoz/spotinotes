@@ -19,6 +19,9 @@ import com.adamratzman.spotify.models.Track;
 import com.duzce.spotinotes.R;
 import com.duzce.spotinotes.db.Note;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CreateNote extends DialogFragment {
 
     SavedNotes savedNotes;
@@ -47,6 +50,9 @@ public class CreateNote extends DialogFragment {
             }
             if (player.currentlyPlayingType == CurrentlyPlayingType.Track) {
                 Track t = (Track) player.currentlyPlayingItem;
+                Date currentDate = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String currentDateTime = dateFormat.format(currentDate);
                 savedNotes.CreateNote(new Note(
                         t.getName(),
                         t.getExternalUrls().get(0).getUrl(),
@@ -57,12 +63,16 @@ public class CreateNote extends DialogFragment {
                         t.getDurationMs(),
                         "",
                         note,
-                        ""
+                        "",
+                        currentDateTime
                 ));
                 getDialog().dismiss();
                 Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show(); // TODO
             } else if (player.currentlyPlayingType == CurrentlyPlayingType.Episode) {
                 Episode e = (Episode) player.currentlyPlayingItem;
+                Date currentDate = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String currentDateTime = dateFormat.format(currentDate);
                 savedNotes.CreateNote(new Note(
                         e.getName(),
                         e.getExternalUrls().get(0).getUrl(),
@@ -73,7 +83,8 @@ public class CreateNote extends DialogFragment {
                         e.getDurationMs(),
                         "",
                         note,
-                        ""
+                        "",
+                        currentDateTime
                 ));
                 getDialog().dismiss();
                 Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show(); // TODO

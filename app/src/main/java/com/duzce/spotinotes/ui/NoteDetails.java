@@ -104,6 +104,7 @@ public class NoteDetails extends Fragment {
         detailedNoteNameTextView.setText(note.getTrackName());
         detailedNoteArtistTextView.setText(note.getArtistName());
         detailedNoteTextView.setText(note.getNote());
+        detailedoteDateTimeTextView.setText(note.getNotedDateTime());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

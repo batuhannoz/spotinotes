@@ -32,7 +32,8 @@ public class NotesDbHelper extends SQLiteOpenHelper {
                 Config.COLUMN_PROGRESS_MS + " INTEGER, " +
                 Config.COLUMN_LYRICS + " TEXT, " +
                 Config.COLUMN_NOTE + " TEXT, " +
-                Config.COLUMN_NOTED_LYRICS + " TEXT" +
+                Config.COLUMN_NOTED_LYRICS + " TEXT," +
+                Config.COLUMN_NOTED_DATETIME + " TEXT" +
                 ")";
         db.execSQL(createTableQuery);
     }
