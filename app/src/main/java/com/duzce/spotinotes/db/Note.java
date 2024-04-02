@@ -1,31 +1,36 @@
 package com.duzce.spotinotes.db;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity(tableName = "notes")
 public class Note {
-
+    @PrimaryKey(autoGenerate = true)
     private int id;
-
+    @NonNull
     private String trackName;
-
+    @NonNull
     private String trackUrl;
-
+    @NonNull
     private String trackImageUrl;
-
+    @NonNull
     private String artistName;
 
     private String artistUrl;
 
     private String previewUrl;
-
+    @NonNull
     private int progressMs;
 
     private String lyrics;
-
+    @NonNull
     private String note;
 
     private String notedLyrics;
-
+    @NonNull
     private String notedDateTime;
 
     public Note(String trackName, String trackUrl, String trackImageUrl, String artistName, String artistUrl, String previewUrl, int progressMs, String lyrics, String note, String notedLyrics, String notedDateTime) {

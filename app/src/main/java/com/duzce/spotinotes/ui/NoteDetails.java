@@ -2,6 +2,7 @@ package com.duzce.spotinotes.ui;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -9,20 +10,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.duzce.spotinotes.R;
 import com.duzce.spotinotes.adapter.NoteDetailsAdapter;
 import com.duzce.spotinotes.adapter.SavedNotesAdapter;
 import com.duzce.spotinotes.db.Note;
-import com.duzce.spotinotes.db.NotesQueryClass;
+import com.duzce.spotinotes.db.NoteRepository;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -35,7 +34,7 @@ public class NoteDetails extends Fragment {
 
     private Note note;
 
-    private NotesQueryClass notesDb;
+    private NoteRepository repository;
 
     private RecyclerView recyclerView;
 
@@ -57,14 +56,9 @@ public class NoteDetails extends Fragment {
 
     private SavedNotesAdapter parentAdapter;
 
-
-
-
-
-
-    public NoteDetails(Note note, NotesQueryClass notesDb, SavedNotesAdapter parentAdapter) {
+    public NoteDetails(Note note, NoteRepository repository, SavedNotesAdapter parentAdapter) {
         this.note = note;
-        this.notesDb = notesDb;
+        this.repository = repository;
         this.parentAdapter = parentAdapter;
     }
 
@@ -82,9 +76,10 @@ public class NoteDetails extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        parentAdapter.noteList = notesDb.getAllNotes();
+
+        parentAdapter.noteList = repository.getAllNotes();
         parentAdapter.notifyDataSetChanged();
-        if (note == null && notesDb == null) return;
+        if (note == null && repository == null) return;
 
         recyclerView = getView().findViewById(R.id.recycler_view_same_track_saved_notes);
         openWithSpotifyButton = getView().findViewById(R.id.open_with_spotify_button);
@@ -150,7 +145,7 @@ public class NoteDetails extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        parentAdapter.noteList = notesDb.getAllNotes();
+        parentAdapter.noteList = repository.getAllNotes();
         parentAdapter.notifyDataSetChanged();
     }
 

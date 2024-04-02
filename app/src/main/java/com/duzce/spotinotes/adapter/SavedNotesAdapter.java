@@ -5,21 +5,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.duzce.spotinotes.R;
 import com.duzce.spotinotes.db.Note;
-import com.duzce.spotinotes.db.NotesQueryClass;
+import com.duzce.spotinotes.db.NoteRepository;
 import com.duzce.spotinotes.ui.NoteDetails;
 import com.squareup.picasso.Picasso;
 
@@ -33,12 +29,12 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     public List<Note> noteList;
 
-    private NotesQueryClass notesDb;
+    private NoteRepository repository;
 
     public SavedNotesAdapter(Context context, List<Note> noteList) {
         this.context = context;
         this.noteList = noteList;
-        notesDb = new NotesQueryClass(context);
+        repository = new NoteRepository(context);
     }
 
     @Override
@@ -69,13 +65,10 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
             alertDialogBuilder.setMessage("Bu Notu Silmek istediginize emin misiniz?"); // TODO
             alertDialogBuilder.setPositiveButton("Evet", // TODO
                     (arg0, arg1) -> {
-                        long count = notesDb.deleteNote(note.getId());
-                        if(count>0) {
-                            noteList.remove(holder.getLayoutPosition());
-                            notifyItemRemoved(holder.getLayoutPosition());
-                            Toast.makeText(context, "Note deleted successfully", Toast.LENGTH_SHORT).show(); // TODO
-                        } else
-                            Toast.makeText(context, "Note not deleted. Something wrong!", Toast.LENGTH_SHORT).show(); // TODO
+                        repository.deleteNote(note);
+                        noteList.remove(holder.getLayoutPosition());
+                        notifyItemRemoved(holder.getLayoutPosition());
+                        Toast.makeText(context, "Note deleted successfully", Toast.LENGTH_SHORT).show(); // TODO
                     }
             );
             alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss()); // TODO
@@ -84,7 +77,7 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         });
 
         holder.itemView.setOnClickListener(v -> {
-            NoteDetails noteDetails = new NoteDetails(note, notesDb, this);
+            NoteDetails noteDetails = new NoteDetails(note, repository, this);
             FragmentTransaction transaction = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
             transaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down, R.anim.slide_up, R.anim.slide_down);
             transaction.add(android.R.id.content, noteDetails);

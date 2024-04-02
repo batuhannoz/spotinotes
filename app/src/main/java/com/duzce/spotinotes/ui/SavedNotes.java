@@ -16,14 +16,14 @@ import android.widget.EditText;
 import com.duzce.spotinotes.R;
 import com.duzce.spotinotes.adapter.SavedNotesAdapter;
 import com.duzce.spotinotes.db.Note;
-import com.duzce.spotinotes.db.NotesQueryClass;
+import com.duzce.spotinotes.db.NoteRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SavedNotes extends Fragment {
 
-    private NotesQueryClass notesDb;
+    private NoteRepository repository;
 
     private EditText searchEditText;
 
@@ -34,7 +34,7 @@ public class SavedNotes extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        notesDb = new NotesQueryClass(getContext());
+        repository = new NoteRepository(getContext());
         return inflater.inflate(R.layout.fragment_saved_notes, container, false);
     }
 
@@ -47,7 +47,8 @@ public class SavedNotes extends Fragment {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        List<Note> noteList = notesDb.getAllNotes();
+
+        List<Note> noteList = repository.getAllNotes();
         adapter = new SavedNotesAdapter(getContext(), noteList);
         recyclerView.setAdapter(adapter);
 
@@ -61,10 +62,10 @@ public class SavedNotes extends Fragment {
             public void afterTextChanged(Editable s) {
                 String searchText = s.toString().trim().toLowerCase();
                 if (searchText.isEmpty()) {
-                    adapter.noteList = notesDb.getAllNotes();
+                    adapter.noteList = repository.getAllNotes();
                 } else {
                     List<Note> filteredList = new ArrayList<>();
-                    for (Note note : notesDb.getAllNotes()) {
+                    for (Note note : repository.getAllNotes()) {
                         String trackName = note.getTrackName().toLowerCase();
                         String artistName = note.getArtistName().toLowerCase();
                         String noteText = note.getNote().toLowerCase();
@@ -80,7 +81,7 @@ public class SavedNotes extends Fragment {
     }
 
     public void CreateNote(Note note) {
-        long i = notesDb.insertNote(note);
+        long i = repository.insertNote(note);
         note.setId((int) i);
         adapter.noteList.add(note);
         adapter.notifyItemInserted(adapter.getItemCount());

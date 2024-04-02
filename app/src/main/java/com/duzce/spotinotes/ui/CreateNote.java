@@ -71,7 +71,7 @@ public class CreateNote extends DialogFragment {
             } else if (player.currentlyPlayingType == CurrentlyPlayingType.Episode) {
                 Episode e = (Episode) player.currentlyPlayingItem;
                 Date currentDate = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 String currentDateTime = dateFormat.format(currentDate);
                 savedNotes.CreateNote(new Note(
                         e.getName(),

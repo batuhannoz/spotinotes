@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.duzce.spotinotes.R;
 import com.duzce.spotinotes.db.Note;
-import com.duzce.spotinotes.db.NotesQueryClass;
+import com.duzce.spotinotes.db.NoteRepository;
 import com.duzce.spotinotes.ui.NoteDetails;
 import com.squareup.picasso.Picasso;
 
@@ -26,7 +26,7 @@ public class NoteDetailsAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     public List<Note> noteList;
 
-    private NotesQueryClass notesDb;
+    private NoteRepository repository;
 
     private SavedNotesAdapter parentAdapter;
 
@@ -37,7 +37,7 @@ public class NoteDetailsAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         this.noteList = noteList;
         this.parentAdapter = parentAdapter;
         this.noteDetails = noteDetails;
-        notesDb = new NotesQueryClass(context);
+        repository = new NoteRepository(context);
     }
 
     @Override
@@ -69,14 +69,10 @@ public class NoteDetailsAdapter extends RecyclerView.Adapter<NoteViewHolder> {
             alertDialogBuilder.setMessage("Bu Notu Silmek istediginize emin misiniz?"); // TODO
             alertDialogBuilder.setPositiveButton("Evet", // TODO
                     (arg0, arg1) -> {
-                        long count = notesDb.deleteNote(note.getId());
-                        if(count>0) {
-                            noteList.remove(holder.getLayoutPosition());
-                            notifyItemRemoved(holder.getLayoutPosition());
-
-                            Toast.makeText(context, "Note deleted successfully", Toast.LENGTH_SHORT).show(); // TODO
-                        } else
-                            Toast.makeText(context, "Note not deleted. Something wrong!", Toast.LENGTH_SHORT).show(); // TODO
+                        repository.deleteNote(note);
+                        noteList.remove(holder.getLayoutPosition());
+                        notifyItemRemoved(holder.getLayoutPosition());
+                        Toast.makeText(context, "Note deleted successfully", Toast.LENGTH_SHORT).show(); // TODO
                     }
             );
             alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss()); // TODO

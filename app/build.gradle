@@ -75,4 +75,6 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'// 3rd party api library
     implementation "com.adamratzman:spotify-api-kotlin-core:4.1.0"
+    implementation "androidx.room:room-runtime:2.5.0"
+    annotationProcessor "androidx.room:room-compiler:2.5.0"
 }
