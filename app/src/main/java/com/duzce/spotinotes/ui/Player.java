@@ -148,9 +148,7 @@ public class Player extends Fragment {
                         }
                     }
                     @Override
-                    public void onFailure(@NonNull Throwable throwable) {
-                        Log.i("TAG", "onFailure: " + throwable);
-                    }
+                    public void onFailure(@NonNull Throwable throwable) {}
                 });
     }
     public void UpdatePlayerUI(String displayName, String imageUri, Boolean isPlaying) {

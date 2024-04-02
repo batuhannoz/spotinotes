@@ -52,9 +52,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:backgroundTint="@color/spotify_light_grey"
         app:itemIconTint="@color/spotify_icon_color"
         app:itemTextColor="@color/spotify_icon_color"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"
+        app:backgroundTint="@color/spotify_light_grey" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

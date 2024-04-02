@@ -62,16 +62,16 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         holder.noteTextView.setText(note.getNote());
         holder.deleteNoteButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-            alertDialogBuilder.setMessage("Bu Notu Silmek istediginize emin misiniz?"); // TODO
-            alertDialogBuilder.setPositiveButton("Evet", // TODO
+            alertDialogBuilder.setMessage("Bu Notu Silmek istediginize emin misiniz?"); // TODO language
+            alertDialogBuilder.setPositiveButton("Evet", // TODO language
                     (arg0, arg1) -> {
                         repository.deleteNote(note);
                         noteList.remove(holder.getLayoutPosition());
                         notifyItemRemoved(holder.getLayoutPosition());
-                        Toast.makeText(context, "Note deleted successfully", Toast.LENGTH_SHORT).show(); // TODO
+                        Toast.makeText(context, "Note deleted successfully", Toast.LENGTH_SHORT).show(); // TODO language
                     }
             );
-            alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss()); // TODO
+            alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss()); // TODO language
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         });

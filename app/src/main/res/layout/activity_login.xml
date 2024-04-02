@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/spotify_dark_grey">
+    <!--TODO Dark/Light Mode-->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/LoginButton"
@@ -21,5 +22,5 @@
         app:layout_constraintTop_toTopOf="parent"
         android:backgroundTint="@color/spotify_green"
         android:text="Log in with Spotify" />
-
+        <!--TODO language-->
 </androidx.constraintlayout.widget.ConstraintLayout>

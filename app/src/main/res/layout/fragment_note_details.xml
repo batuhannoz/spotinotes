@@ -123,14 +123,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
-            android:text="Saved notes with same song or artist"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/line_view"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Saved notes with same song or artist" />
+        <!--TODO language-->
 
         <View
             android:id="@+id/line_view"

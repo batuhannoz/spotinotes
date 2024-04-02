@@ -45,13 +45,13 @@ public class CreateNote extends DialogFragment {
         createButton.setOnClickListener(v -> {
             String note = noteText.getText().toString();
             if (note.isEmpty()) {
-                Toast.makeText(getContext(), "Note field cannot be empty", Toast.LENGTH_SHORT).show(); // TODO
+                Toast.makeText(getContext(), "Note field cannot be empty", Toast.LENGTH_SHORT).show(); // TODO language
                 return;
             }
             if (player.currentlyPlayingType == CurrentlyPlayingType.Track) {
                 Track t = (Track) player.currentlyPlayingItem;
                 Date currentDate = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 String currentDateTime = dateFormat.format(currentDate);
                 savedNotes.CreateNote(new Note(
                         t.getName(),
@@ -67,7 +67,7 @@ public class CreateNote extends DialogFragment {
                         currentDateTime
                 ));
                 getDialog().dismiss();
-                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show(); // TODO
+                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show(); // TODO language
             } else if (player.currentlyPlayingType == CurrentlyPlayingType.Episode) {
                 Episode e = (Episode) player.currentlyPlayingItem;
                 Date currentDate = new Date();
@@ -87,7 +87,7 @@ public class CreateNote extends DialogFragment {
                         currentDateTime
                 ));
                 getDialog().dismiss();
-                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show(); // TODO
+                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show(); // TODO language
             }
         });
         cancelButton.setOnClickListener(v -> getDialog().dismiss());
