@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Update;
 
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import com.duzce.spotinotes.R;
 import com.duzce.spotinotes.adapter.NoteDetailsAdapter;
 import com.duzce.spotinotes.adapter.SavedNotesAdapter;
+import com.duzce.spotinotes.api.lyrics.LyricsApi;
 import com.duzce.spotinotes.db.note.Note;
 import com.duzce.spotinotes.db.note.NoteRepository;
 import com.squareup.picasso.Picasso;
@@ -158,6 +161,23 @@ public class NoteDetails extends Fragment {
             alertDialogBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()); // TODO
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
+        });
+
+        openLyricsButton.setOnClickListener(v -> {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            LyricsApi.LyricsResponse response = LyricsApi.LyricsMatcher(note.getTrackName(), note.getArtistName());
+
+            String[] parts = response.getMessage().getBody().getLyrics().getLyrics_body()
+                    .split(LyricsApi.CommercialUsePattern);
+
+            if (parts.length > 0) {
+                String cleanedLyricsBody = parts[0].trim();
+                System.out.println(cleanedLyricsBody);
+            } else {
+                System.out.println("Eşleşme bulunamadı.");
+            }
         });
 
         shareNoteButton.setOnClickListener(v -> {
