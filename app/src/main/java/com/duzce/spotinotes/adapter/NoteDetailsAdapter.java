@@ -58,7 +58,7 @@ public class NoteDetailsAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         holder.deleteNoteButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
             alertDialogBuilder.setMessage("Bu Notu Silmek istediginize emin misiniz?"); // TODO language
-            alertDialogBuilder.setPositiveButton("Evet", // TODO
+            alertDialogBuilder.setPositiveButton("Evet", // TODO language
                     (arg0, arg1) -> {
                         repository.deleteNote(note);
                         noteList.remove(holder.getLayoutPosition());

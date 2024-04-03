@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Update;
 
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import com.duzce.spotinotes.R;
 import com.duzce.spotinotes.adapter.NoteDetailsAdapter;
 import com.duzce.spotinotes.adapter.SavedNotesAdapter;
+import com.duzce.spotinotes.api.lyrics.LyricsApi;
 import com.duzce.spotinotes.db.note.Note;
 import com.duzce.spotinotes.db.note.NoteRepository;
 import com.squareup.picasso.Picasso;
@@ -91,8 +94,8 @@ public class NoteDetails extends Fragment {
         openWithSpotifyButton = getView().findViewById(R.id.open_with_spotify_button);
         shareNoteButton = getView().findViewById(R.id.share_note_button);
         deleteDetailedNoteButton = getView().findViewById(R.id.delete_detailed_note_button);
-        openLyricsButton = getView().findViewById(R.id.open_lyrics_button); // TODO
-        editNoteButton = getView().findViewById(R.id.edit_note_button); // TODO
+        openLyricsButton = getView().findViewById(R.id.open_lyrics_button);
+        editNoteButton = getView().findViewById(R.id.edit_note_button);
         detailedNoteImageView = getView().findViewById(R.id.detailed_note_image_view);
         detailedNoteNameTextView = getView().findViewById(R.id.detailed_note_name_text_view);
         detailedNoteArtistTextView = getView().findViewById(R.id.detailed_note_artist_text_view);
@@ -102,7 +105,7 @@ public class NoteDetails extends Fragment {
         deleteDetailedNoteButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
             alertDialogBuilder.setMessage("Bu Notu Silmek istediginize emin misiniz?"); // TODO language
-            alertDialogBuilder.setPositiveButton("Evet", // TODO
+            alertDialogBuilder.setPositiveButton("Evet", // TODO language
                     (arg0, arg1) -> {
                         repository.deleteNote(note);
                         getActivity().getOnBackPressedDispatcher().onBackPressed();
@@ -145,8 +148,8 @@ public class NoteDetails extends Fragment {
 
         openWithSpotifyButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-            alertDialogBuilder.setMessage("You will be directed to the spotify application to open the song."); // TODO
-            alertDialogBuilder.setPositiveButton("Redirect", // TODO
+            alertDialogBuilder.setMessage("You will be directed to the spotify application to open the song."); // TODO language
+            alertDialogBuilder.setPositiveButton("Redirect", // TODO language
                     (arg0, arg1) -> {
                         final String spotifyContent = note.getTrackUrl();
                         final String branchLink = "https://spotify.link/content_linking?~campaign=" + getContext().getPackageName() + "&$deeplink_path=" + spotifyContent + "&$fallback_url=" + spotifyContent;
@@ -155,15 +158,23 @@ public class NoteDetails extends Fragment {
                         startActivity(intent);
                     }
             );
-            alertDialogBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()); // TODO
+            alertDialogBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()); // TODO language
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
+        });
+
+        openLyricsButton.setOnClickListener(v -> {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            LyricsApi.LyricsResponse response = LyricsApi.LyricsMatcher(note.getTrackName(), note.getArtistName());
+            // TODO
         });
 
         shareNoteButton.setOnClickListener(v -> {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, note.getNote()); // TODO
+            sendIntent.putExtra(Intent.EXTRA_TEXT, note.getNote()); // TODO need better share text
             sendIntent.setType("text/plain");
 
             Intent shareIntent = Intent.createChooser(sendIntent, null);
