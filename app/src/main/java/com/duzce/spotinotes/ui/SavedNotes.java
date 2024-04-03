@@ -15,8 +15,8 @@ import android.widget.EditText;
 
 import com.duzce.spotinotes.R;
 import com.duzce.spotinotes.adapter.SavedNotesAdapter;
-import com.duzce.spotinotes.db.Note;
-import com.duzce.spotinotes.db.NoteRepository;
+import com.duzce.spotinotes.db.note.Note;
+import com.duzce.spotinotes.db.note.NoteRepository;
 
 import java.util.ArrayList;
 import java.util.List;

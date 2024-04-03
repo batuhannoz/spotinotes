@@ -1,4 +1,4 @@
-package com.duzce.spotinotes.db;
+package com.duzce.spotinotes.db.note;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;

@@ -1,13 +1,11 @@
 package com.duzce.spotinotes;
 
-import static com.duzce.spotinotes.db.TokenManager.getAccessToken;
-import static com.duzce.spotinotes.db.TokenManager.saveAccessToken;
+import static com.duzce.spotinotes.db.token.TokenManager.getAccessToken;
+import static com.duzce.spotinotes.db.token.TokenManager.saveAccessToken;
 import static com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;

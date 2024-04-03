@@ -1,4 +1,4 @@
-package com.duzce.spotinotes.db;
+package com.duzce.spotinotes.db.note;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

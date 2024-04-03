@@ -17,7 +17,7 @@ import com.adamratzman.spotify.models.CurrentlyPlayingType;
 import com.adamratzman.spotify.models.Episode;
 import com.adamratzman.spotify.models.Track;
 import com.duzce.spotinotes.R;
-import com.duzce.spotinotes.db.Note;
+import com.duzce.spotinotes.db.note.Note;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

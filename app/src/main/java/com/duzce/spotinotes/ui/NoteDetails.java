@@ -2,7 +2,6 @@ package com.duzce.spotinotes.ui;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -20,8 +19,8 @@ import android.widget.TextView;
 import com.duzce.spotinotes.R;
 import com.duzce.spotinotes.adapter.NoteDetailsAdapter;
 import com.duzce.spotinotes.adapter.SavedNotesAdapter;
-import com.duzce.spotinotes.db.Note;
-import com.duzce.spotinotes.db.NoteRepository;
+import com.duzce.spotinotes.db.note.Note;
+import com.duzce.spotinotes.db.note.NoteRepository;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

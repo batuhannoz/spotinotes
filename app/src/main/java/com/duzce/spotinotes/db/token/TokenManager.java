@@ -1,4 +1,4 @@
-package com.duzce.spotinotes.db;
+package com.duzce.spotinotes.db.token;
 
 import android.content.Context;
 import android.content.SharedPreferences;

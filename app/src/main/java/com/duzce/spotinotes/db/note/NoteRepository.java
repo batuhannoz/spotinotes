@@ -1,4 +1,4 @@
-package com.duzce.spotinotes.db;
+package com.duzce.spotinotes.db.note;
 
 import android.content.Context;
 

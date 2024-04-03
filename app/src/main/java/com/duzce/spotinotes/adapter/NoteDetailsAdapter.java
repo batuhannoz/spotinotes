@@ -11,8 +11,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.duzce.spotinotes.R;
-import com.duzce.spotinotes.db.Note;
-import com.duzce.spotinotes.db.NoteRepository;
+import com.duzce.spotinotes.db.note.Note;
+import com.duzce.spotinotes.db.note.NoteRepository;
 import com.duzce.spotinotes.ui.NoteDetails;
 import com.squareup.picasso.Picasso;
 

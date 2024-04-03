@@ -1,12 +1,10 @@
 package com.duzce.spotinotes;
 
-import static com.duzce.spotinotes.db.TokenManager.getAccessToken;
+import static com.duzce.spotinotes.db.token.TokenManager.getAccessToken;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
