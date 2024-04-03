@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.duzce.spotinotes.R;
 import com.duzce.spotinotes.adapter.NoteDetailsAdapter;
@@ -45,6 +46,8 @@ public class NoteDetails extends Fragment {
     private Button editNoteButton;
 
     private Button openLyricsButton;
+
+    private Button deleteDetailedNoteButton;
 
     private ImageView detailedNoteImageView;
 
@@ -87,6 +90,7 @@ public class NoteDetails extends Fragment {
         recyclerView = getView().findViewById(R.id.recycler_view_same_track_saved_notes);
         openWithSpotifyButton = getView().findViewById(R.id.open_with_spotify_button);
         shareNoteButton = getView().findViewById(R.id.share_note_button);
+        deleteDetailedNoteButton = getView().findViewById(R.id.delete_detailed_note_button);
         openLyricsButton = getView().findViewById(R.id.open_lyrics_button); // TODO
         editNoteButton = getView().findViewById(R.id.edit_note_button); // TODO
         detailedNoteImageView = getView().findViewById(R.id.detailed_note_image_view);
@@ -94,6 +98,21 @@ public class NoteDetails extends Fragment {
         detailedNoteArtistTextView = getView().findViewById(R.id.detailed_note_artist_text_view);
         detailedNoteTextView = getView().findViewById(R.id.detailed_note_text_view);
         detailedoteDateTimeTextView = getView().findViewById(R.id.detailed_note_date_time_text_view);
+
+        deleteDetailedNoteButton.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            alertDialogBuilder.setMessage("Bu Notu Silmek istediginize emin misiniz?"); // TODO language
+            alertDialogBuilder.setPositiveButton("Evet", // TODO
+                    (arg0, arg1) -> {
+                        repository.deleteNote(note);
+                        getActivity().getOnBackPressedDispatcher().onBackPressed();
+                        Toast.makeText(getContext(), "Note deleted successfully", Toast.LENGTH_SHORT).show(); // TODO language
+                    }
+            );
+            alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss()); // TODO language
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        });
 
         editNoteButton.setOnClickListener(v -> {
             UpdateNote updateNote = new UpdateNote(note, repository, this);
