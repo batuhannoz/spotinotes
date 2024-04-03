@@ -42,6 +42,10 @@ public class NoteDetails extends Fragment {
 
     private Button shareNoteButton;
 
+    private Button editNoteButton;
+
+    private Button openLyricsButton;
+
     private ImageView detailedNoteImageView;
 
     private TextView detailedNoteNameTextView;
@@ -83,12 +87,14 @@ public class NoteDetails extends Fragment {
 
         recyclerView = getView().findViewById(R.id.recycler_view_same_track_saved_notes);
         openWithSpotifyButton = getView().findViewById(R.id.open_with_spotify_button);
+        shareNoteButton = getView().findViewById(R.id.share_note_button);
+        openLyricsButton = getView().findViewById(R.id.open_lyrics_button); // TODO
+        editNoteButton = getView().findViewById(R.id.edit_note_button); // TODO
         detailedNoteImageView = getView().findViewById(R.id.detailed_note_image_view);
         detailedNoteNameTextView = getView().findViewById(R.id.detailed_note_name_text_view);
         detailedNoteArtistTextView = getView().findViewById(R.id.detailed_note_artist_text_view);
         detailedNoteTextView = getView().findViewById(R.id.detailed_note_text_view);
         detailedoteDateTimeTextView = getView().findViewById(R.id.detailed_note_date_time_text_view);
-        shareNoteButton = getView().findViewById(R.id.share_note_button);
 
         Picasso
                 .get()

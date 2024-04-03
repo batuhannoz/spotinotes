@@ -16,6 +16,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     TextView noteTextView;
     Button deleteNoteButton;
     ImageView savedNoteImageView;
+    TextView dateTimeTexView;
 
     NoteViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -24,5 +25,6 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
         artistNameTextView = itemView.findViewById(R.id.artist_name_text_view);
         noteTextView = itemView.findViewById(R.id.noteTextView);
         deleteNoteButton = itemView.findViewById(R.id.deleteNoteButton);
+        dateTimeTexView = itemView.findViewById(R.id.date_time_text_view);
     }
 }

@@ -70,20 +70,67 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="@+id/detailed_note_image_view"
             app:layout_constraintStart_toEndOf="@+id/detailed_note_image_view"
-            tools:text="date-time" />
+            app:layout_constraintTop_toBottomOf="@+id/detailed_note_artist_text_view"
+            tools:text="HH:mm dd/MM/yyyy" />
+
+        <View
+            android:id="@+id/line_view_1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@color/spotify_icon_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailed_note_date_time_text_view" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/edit_note_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="20dp"
+            android:background="@android:color/transparent"
+            android:drawableTint="@color/white"
+            app:icon="@drawable/edit"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="28dp"
+            app:iconTint="@color/spotify_icon_color"
+            app:layout_constraintBottom_toTopOf="@+id/line_view_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line_view_1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/open_lyrics_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="14dp"
+            android:background="@android:color/transparent"
+            android:drawableTint="@color/white"
+            app:icon="@drawable/lyrics"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="28dp"
+            app:iconTint="@color/spotify_icon_color"
+            app:layout_constraintBottom_toTopOf="@+id/line_view_2"
+            app:layout_constraintStart_toEndOf="@id/edit_note_button"
+            app:layout_constraintTop_toBottomOf="@+id/line_view_1" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/open_with_spotify_button"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="14dp"
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/spotify_logo_green_background"
-            app:layout_constraintBottom_toBottomOf="@+id/detailed_note_image_view"
-            app:layout_constraintEnd_toStartOf="@id/share_note_button" />
+            app:layout_constraintEnd_toStartOf="@id/share_note_button"
+            app:layout_constraintTop_toBottomOf="@+id/line_view_1"
+            app:layout_constraintBottom_toTopOf="@id/line_view_2"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/share_note_button"
@@ -98,17 +145,30 @@
             app:iconPadding="0dp"
             app:iconSize="28dp"
             app:iconTint="@color/spotify_icon_color"
-            app:layout_constraintBottom_toBottomOf="@+id/detailed_note_image_view"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/line_view_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line_view_1" />
+
+        <View
+            android:id="@+id/line_view_2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@color/spotify_icon_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line_view_1" />
 
         <TextView
             android:id="@+id/detailed_note_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:minHeight="75dp"
             tools:text="Note"
             android:textColor="@color/white"
@@ -116,7 +176,7 @@
             app:layout_constraintBottom_toTopOf="@+id/other_notes_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detailed_note_image_view" />
+            app:layout_constraintTop_toBottomOf="@+id/line_view_2" />
 
         <TextView
             android:id="@+id/other_notes_text_view"
@@ -127,14 +187,14 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/line_view"
+            app:layout_constraintBottom_toBottomOf="@+id/line_view_3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:text="Saved notes with same song or artist" />
         <!--TODO language-->
 
         <View
-            android:id="@+id/line_view"
+            android:id="@+id/line_view_3"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginVertical="8dp"

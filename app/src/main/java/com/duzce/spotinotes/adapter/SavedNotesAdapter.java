@@ -76,6 +76,8 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
             alertDialog.show();
         });
 
+        holder.dateTimeTexView.setText(note.getNotedDateTime());
+
         holder.itemView.setOnClickListener(v -> {
             NoteDetails noteDetails = new NoteDetails(note, repository, this);
             FragmentTransaction transaction = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();

@@ -80,6 +80,8 @@ public class NoteDetailsAdapter extends RecyclerView.Adapter<NoteViewHolder> {
             alertDialog.show();
         });
 
+        holder.dateTimeTexView.setText(note.getNotedDateTime());
+
         holder.itemView.setOnClickListener(v -> {
             noteDetails.setNote(note);
             noteDetails.onStart();

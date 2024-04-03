@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:layout_height="wrap_content"
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,7 +8,7 @@
     app:cardElevation="8dp"
     android:layout_margin="5dp"
     android:backgroundTint="@color/spotify_dark_grey">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -17,74 +18,86 @@
             android:id="@+id/saved_note_image_view"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:layout_gravity="start"
             android:contentDescription="TODO"
-            android:layout_gravity="start"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/track_name_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp">
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/deleteNoteButton"
+            app:layout_constraintStart_toEndOf="@+id/saved_note_image_view"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/track_name_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:maxLines="1"
-                android:ellipsize="end" />
+        <TextView
+            android:id="@+id/artist_name_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@+id/deleteNoteButton"
+            app:layout_constraintStart_toEndOf="@+id/saved_note_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/track_name_text_view" />
 
-            <TextView
-                android:id="@+id/artist_name_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:layout_weight="1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/noteTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/date_time_text_view"
+            app:layout_constraintStart_toEndOf="@+id/saved_note_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/artist_name_text_view" />
 
-            <TextView
-                android:id="@+id/noteTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:layout_weight="1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textSize="14sp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/deleteNoteButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="start"
+            android:background="?android:attr/selectableItemBackground"
+            app:icon="@drawable/delete"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="30dp"
+            app:iconTint="@color/spotify_icon_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/date_time_text_view"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="end"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            tools:text="HH:mm dd/MM/yyyy"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/deleteNoteButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="start"
-                android:background="?android:attr/selectableItemBackground"
-                app:iconGravity="textStart"
-                app:iconPadding="0dp"
-                app:iconSize="30dp"
-                app:icon="@drawable/delete"
-                app:iconTint="@color/spotify_icon_color"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

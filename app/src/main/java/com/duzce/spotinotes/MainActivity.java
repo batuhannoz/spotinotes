@@ -71,11 +71,11 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         navController.addOnDestinationChangedListener((navController1, navDestination, bundle) -> {
             if (navDestination.getId() == R.id.navigation_profile) {
-                fab.animate().setDuration(300).scaleX(0).scaleY(0).alpha(1)
+                fab.animate().setDuration(400).scaleX(0).scaleY(0).alpha(1)
                         .setInterpolator(new LinearOutSlowInInterpolator()).start();
                 fab.setClickable(false);
             } else if (navDestination.getId() == R.id.navigation_saved_notes) {
-                fab.animate().setDuration(300).scaleX(1).scaleY(1).alpha(1)
+                fab.animate().setDuration(400).scaleX(1).scaleY(1).alpha(1)
                         .setInterpolator(new LinearOutSlowInInterpolator()).start();
                 fab.setClickable(true);
             }
