@@ -27,6 +27,8 @@ public class NoteRepository {
         return noteDao.searchNotes("%" + query + "%");
     }
 
+    public void updateNote(Note note) {noteDao.update(note);}
+
     public long insertNote(Note note) {
         return noteDao.insert(note);
     }

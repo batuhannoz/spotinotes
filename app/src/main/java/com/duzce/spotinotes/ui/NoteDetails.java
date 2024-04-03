@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Update;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,7 +82,6 @@ public class NoteDetails extends Fragment {
         super.onStart();
 
         parentAdapter.noteList = repository.getAllNotes();
-        parentAdapter.notifyDataSetChanged();
         if (note == null && repository == null) return;
 
         recyclerView = getView().findViewById(R.id.recycler_view_same_track_saved_notes);
@@ -94,6 +94,11 @@ public class NoteDetails extends Fragment {
         detailedNoteArtistTextView = getView().findViewById(R.id.detailed_note_artist_text_view);
         detailedNoteTextView = getView().findViewById(R.id.detailed_note_text_view);
         detailedoteDateTimeTextView = getView().findViewById(R.id.detailed_note_date_time_text_view);
+
+        editNoteButton.setOnClickListener(v -> {
+            UpdateNote updateNote = new UpdateNote(note, repository, this);
+            updateNote.show(getParentFragmentManager(), "Update Note"); // TODO language
+        });
 
         Picasso
                 .get()
@@ -115,7 +120,7 @@ public class NoteDetails extends Fragment {
                                         Objects.equals(note.getArtistName(), this.note.getArtistName())))
                 .collect(Collectors.toList());
 
-        adapter = new NoteDetailsAdapter(getContext(), noteList, parentAdapter, this);
+        adapter = new NoteDetailsAdapter(getContext(), noteList, this);
 
         recyclerView.setAdapter(adapter);
 

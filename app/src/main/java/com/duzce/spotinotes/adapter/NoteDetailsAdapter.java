@@ -28,22 +28,13 @@ public class NoteDetailsAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     private NoteRepository repository;
 
-    private SavedNotesAdapter parentAdapter;
-
     private NoteDetails noteDetails;
 
-    public NoteDetailsAdapter(Context context, List<Note> noteList, SavedNotesAdapter parentAdapter, NoteDetails noteDetails) {
+    public NoteDetailsAdapter(Context context, List<Note> noteList, NoteDetails noteDetails) {
         this.context = context;
         this.noteList = noteList;
-        this.parentAdapter = parentAdapter;
         this.noteDetails = noteDetails;
         repository = new NoteRepository(context);
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
-
     }
 
     @NonNull

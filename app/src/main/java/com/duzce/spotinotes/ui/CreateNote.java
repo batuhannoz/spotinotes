@@ -27,10 +27,7 @@ public class CreateNote extends DialogFragment {
     SavedNotes savedNotes;
     Player player;
 
-    public CreateNote() {}
-
     public CreateNote(SavedNotes savedNotes, Player player) {
-        CreateNote createNote = new CreateNote();
         this.savedNotes = savedNotes;
         this.player = player;
     }
