@@ -122,6 +122,8 @@ public class NoteDetails extends Fragment {
         });
 
         if (!Objects.equals(note.getNotedLyrics(), "")) {
+            openLyricsButton.setVisibility(View.INVISIBLE);
+            openLyricsButton.setClickable(false);
             lyricsTextView.setText(note.getNotedLyrics());
         }
 
@@ -182,6 +184,8 @@ public class NoteDetails extends Fragment {
                         LyricsApi.LyricsResponse response = LyricsApi.LyricsMatcher(note.getTrackName(), note.getArtistName());
                         note.setNotedLyrics(response.getMessage().getBody().getLyrics().getLyrics_body());
                         lyricsTextView.setText(note.getNotedLyrics());
+                        openLyricsButton.setVisibility(View.INVISIBLE);
+                        openLyricsButton.setClickable(false);
                         repository.updateNote(note);
                     }
             );
