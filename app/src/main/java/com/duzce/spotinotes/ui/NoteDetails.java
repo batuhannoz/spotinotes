@@ -8,10 +8,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Update;
 
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +47,8 @@ public class NoteDetails extends Fragment {
     private Button editNoteButton;
 
     private Button openLyricsButton;
+
+    private TextView lyricsTextView;
 
     private Button deleteDetailedNoteButton;
 
@@ -91,6 +91,9 @@ public class NoteDetails extends Fragment {
         if (note == null && repository == null) return;
 
         recyclerView = getView().findViewById(R.id.recycler_view_same_track_saved_notes);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(false);
+
         openWithSpotifyButton = getView().findViewById(R.id.open_with_spotify_button);
         shareNoteButton = getView().findViewById(R.id.share_note_button);
         deleteDetailedNoteButton = getView().findViewById(R.id.delete_detailed_note_button);
@@ -101,6 +104,7 @@ public class NoteDetails extends Fragment {
         detailedNoteArtistTextView = getView().findViewById(R.id.detailed_note_artist_text_view);
         detailedNoteTextView = getView().findViewById(R.id.detailed_note_text_view);
         detailedoteDateTimeTextView = getView().findViewById(R.id.detailed_note_date_time_text_view);
+        lyricsTextView =  getView().findViewById(R.id.lyrics_text_view);
 
         deleteDetailedNoteButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
@@ -116,6 +120,10 @@ public class NoteDetails extends Fragment {
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         });
+
+        if (!Objects.equals(note.getNotedLyrics(), "")) {
+            lyricsTextView.setText(note.getNotedLyrics());
+        }
 
         editNoteButton.setOnClickListener(v -> {
             UpdateNote updateNote = new UpdateNote(note, repository, this);
@@ -164,17 +172,31 @@ public class NoteDetails extends Fragment {
         });
 
         openLyricsButton.setOnClickListener(v -> {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            LyricsApi.LyricsResponse response = LyricsApi.LyricsMatcher(note.getTrackName(), note.getArtistName());
-            // TODO
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            alertDialogBuilder.setMessage("Sarki Sozlerini notunuza kaydetmek istediginize emin misiniz?"); // TODO language
+            alertDialogBuilder.setPositiveButton("Kaydet", // TODO language
+                    (arg0, arg1) -> {
+                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                                .permitAll().build();
+                        StrictMode.setThreadPolicy(policy);
+                        LyricsApi.LyricsResponse response = LyricsApi.LyricsMatcher(note.getTrackName(), note.getArtistName());
+                        note.setNotedLyrics(response.getMessage().getBody().getLyrics().getLyrics_body());
+                        lyricsTextView.setText(note.getNotedLyrics());
+                        repository.updateNote(note);
+                    }
+            );
+            alertDialogBuilder.setNegativeButton("İptal", (dialog, which) -> dialog.dismiss()); // TODO language
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
         });
 
         shareNoteButton.setOnClickListener(v -> {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, note.getNote()); // TODO need better share text
+            sendIntent.putExtra(Intent.EXTRA_TEXT,
+                    note.getTrackName()+" - "+note.getArtistName()+": ("+note.getTrackUrl()+") "+
+                    "İste bu harika sarkiyi dinlerken senin icin aldigim not: "+ note.getNote() // TODO language
+            );
             sendIntent.setType("text/plain");
 
             Intent shareIntent = Intent.createChooser(sendIntent, null);
