@@ -8,7 +8,24 @@
 
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/statusBarColor</item>
+
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="screen">
+        <item name="android:background">@color/spotify_dark_grey</item>
+    </style>
+    <style name="player">
+        <item name="android:background">@color/spotify_light_grey</item>
+    </style>
+    <style name="Bottom_Navigation_color">
+        <item name="android:background">@color/spotify_dark_grey</item>
+    </style>
+    <style name="text_color">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+
 </resources>

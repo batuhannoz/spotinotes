@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spotify_dark_grey"
+    style="@style/screen"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".ui.Profile">
@@ -28,7 +28,7 @@
             android:id="@+id/display_name_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            style="@style/text_color"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:text="John Doe" />
@@ -43,11 +43,43 @@
             android:id="@+id/email_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            style="@style/text_color"
             android:textSize="16sp"
             tools:text="john.doe@example.com" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dark Mode"
+            style="@style/text_color"
+            android:layout_marginStart="18sp"
+            android:textSize="16sp"
+            android:layout_marginEnd="8sp"/>
+
+        <ToggleButton
+            android:id="@+id/toggleDarkMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8sp"
+            android:layout_marginBottom="8sp"
+            android:background="@drawable/toggle_button_selector"
+            android:checked="true"
+            android:padding="4dp"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
 
     <!--TODO Language Spinner Turkish/English-->
 

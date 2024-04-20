@@ -8,7 +8,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_activity_fragment_container"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:background="@color/spotify_dark_grey"
+        style="@style/screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@id/nav_view"
@@ -55,6 +55,6 @@
         app:itemIconTint="@color/spotify_icon_color"
         app:itemTextColor="@color/spotify_icon_color"
         app:menu="@menu/bottom_nav_menu"
-        app:backgroundTint="@color/spotify_light_grey" />
+        style="@style/Bottom_Navigation_color" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

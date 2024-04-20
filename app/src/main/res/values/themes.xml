@@ -6,7 +6,26 @@
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/spotify_light_grey</item>
+        <item name="android:statusBarColor">@color/statusBarColor_light</item>
+
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="screen">
+        <item name="android:background">#a5b8a2</item>
+    </style>
+    <style name="player">
+        <item name="android:background">#065126</item>
+    </style>
+    <style name="Bottom_Navigation_color">
+        <item name="backgroundTint">#065126</item>
+    </style>
+    <style name="text_color">
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="button">
+        <item name="backgroundTint">#A5D39D</item>
+    </style>
+
+
 </resources>

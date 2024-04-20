@@ -14,4 +14,10 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="light_blue">#ADD8E6</color>
+    <color name="dark_blue">#000080</color>
+    <color name="statusBarColor">#171717</color>
+    <color name="statusBarColor_light">#a5b8a2</color>
+
 </resources>

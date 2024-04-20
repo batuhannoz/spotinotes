@@ -4,27 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.SavedNotes"
-    android:background="@color/spotify_dark_grey"
+    style="@style/screen"
     android:orientation="vertical">
 
     <EditText
+
         android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/spotify_icon_color"
-        android:backgroundTint="@color/spotify_icon_color"
+        style="@style/text_color"
         android:hint="Ara..." />
-    <!--TODO Language-->
+
+  <!--TODO Language-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_saved_notes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="200dp"
         android:clipToPadding="false"
+        android:paddingBottom="200dp"
         android:scrollbarStyle="outsideOverlay"
-        tools:listitem="@layout/view_item_note"/>
+        tools:listitem="@layout/view_item_note" />
 
 </LinearLayout>

@@ -7,12 +7,13 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp"
     android:layout_margin="5dp"
-    android:backgroundTint="@color/spotify_dark_grey">
+    android:backgroundTint="@color/black">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="6dp">
+        android:padding="6dp"
+        style="@style/player">
 
         <ImageView
             android:id="@+id/saved_note_image_view"
