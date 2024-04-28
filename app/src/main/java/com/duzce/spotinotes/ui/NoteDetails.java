@@ -108,8 +108,8 @@ public class NoteDetails extends Fragment {
 
         deleteDetailedNoteButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-            alertDialogBuilder.setMessage("Bu Notu Silmek istediginize emin misiniz?"); // TODO language
-            alertDialogBuilder.setPositiveButton("Evet", // TODO language
+            alertDialogBuilder.setMessage("Are you sure you want to delete this note?"); // TODO language
+            alertDialogBuilder.setPositiveButton("Yes", // TODO language
                     (arg0, arg1) -> {
                         repository.deleteNote(note);
                         getActivity().getOnBackPressedDispatcher().onBackPressed();
@@ -175,8 +175,8 @@ public class NoteDetails extends Fragment {
 
         openLyricsButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-            alertDialogBuilder.setMessage("Sarki Sozlerini notunuza kaydetmek istediginize emin misiniz?"); // TODO language
-            alertDialogBuilder.setPositiveButton("Kaydet", // TODO language
+            alertDialogBuilder.setMessage("Are you sure you want to save the lyrics to your note?"); // TODO language
+            alertDialogBuilder.setPositiveButton("Save", // TODO language
                     (arg0, arg1) -> {
                         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                                 .permitAll().build();
@@ -189,7 +189,7 @@ public class NoteDetails extends Fragment {
                         repository.updateNote(note);
                     }
             );
-            alertDialogBuilder.setNegativeButton("İptal", (dialog, which) -> dialog.dismiss()); // TODO language
+            alertDialogBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()); // TODO language
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         });
@@ -199,7 +199,7 @@ public class NoteDetails extends Fragment {
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT,
                     note.getTrackName()+" - "+note.getArtistName()+": ("+note.getTrackUrl()+") "+
-                    "İste bu harika sarkiyi dinlerken senin icin aldigim not: "+ note.getNote() // TODO language
+                    "Here's a note I made for you while listening to this wonderful song: "+ note.getNote() // TODO language
             );
             sendIntent.setType("text/plain");
 

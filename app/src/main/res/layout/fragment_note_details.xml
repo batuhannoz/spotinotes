@@ -223,7 +223,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/line_view_3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="Saved notes with same song or artist" />
+            android:text="@string/saved_notes_with_same_song_or_artist" />
         <!--TODO language-->
 
         <View

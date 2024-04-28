@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">spotinotes</string>
+    <string name="profile">Profile</string>
+    <string name="saved_notes">Saved Notes</string>
+    <string name="profile_image_description">Profile Image</string>
+
+
+    <string-array name="languages">
+        <item name="English">İngilizce</item>
+        <item name="Turkish">Türkçe</item>
+    </string-array>
+
+
+    <string name="noteDelete">Bu Notu Silmek istediginize emin misiniz?</string>
+    <string name="noteDeleteTitle">Not başarıyla silindi.</string>
+    <string name="noteDeleteCancel">Hayır</string>
+    <string name="noteDeleteYes">Evet</string>
+    <string name="noteCreatedInfo">Not alanı boş olamaz!</string>
+    <string name="noteCreatedTitle">Not Oluşturuldu.</string>
+    <string name="noteUpdatedInfo">Not Güncellendi.</string>
+    <string name="openSong">Şarkıyı açmak için spotify uygulamasına yönlendirileceksiniz.</string>
+    <string name="openSongTitle">Yönlendir.</string>
+    <string name="openSongCancel">İptal</string>
+    <string name="saveLyrics">Şarkı sözlerini notunuza kaydetmek istediğinizden emin misiniz?</string>
+    <string name="saveLyricsTitle">Kaydet</string>
+    <string name="saveNote">İste bu harika sarkiyi dinlerken senin icin aldigim not: </string>
+    <string name="activeTrack">Aktif Parça Yok!</string>
+    <string name="createNote">Not Oluştur</string>
+
+    <string name="ara">Ara...</string>
+    <string name="dark_mode">Koyu Tema</string>
+    <string name="saved_notes_with_same_song_or_artist">Aynı şarkı veya sanatçı ile kaydedilmiş notlar</string>
+    <string name="not">Not</string>
+    <string name="cancel">İptal</string>
+    <string name="save">Kaydet</string>
+    <string name="log_in_with_spotify">Spotify ile giriş yapın</string>
+
+
+</resources>
