@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,6 +47,7 @@ public class UpdateNote extends DialogFragment {
             note.setNote(noteText.getText().toString());
             repository.updateNote(note);
             noteDetails.onStart();
+            Toast.makeText(getContext(), R.string.noteUpdatedInfo, Toast.LENGTH_SHORT).show();
             getDialog().dismiss();
         });
 

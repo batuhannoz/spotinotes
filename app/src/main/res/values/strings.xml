@@ -16,7 +16,7 @@
     <string name="noteDeleteYes">YES</string>
     <string name="noteCreatedInfo">Note field cannot be empty</string>
     <string name="noteCreatedTitle">Note Created</string>
-    <string name="noteUpdatedInfo">Update Note</string>
+    <string name="noteUpdatedInfo">Note Updated</string>
     <string name="openSong">You will be directed to the spotify application to open the song.</string>
     <string name="openSongTitle">Redirect</string>
     <string name="openSongCancel">Cancel</string>
