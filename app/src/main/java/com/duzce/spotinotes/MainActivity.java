@@ -84,12 +84,12 @@ public class MainActivity extends AppCompatActivity {
 
         fab.setOnClickListener(v -> {
             if (player.currentlyPlayingType == null) {
-                Toast.makeText(getApplicationContext(), R.string.activeTrack, Toast.LENGTH_SHORT).show(); // TODO language
+                Toast.makeText(getApplicationContext(), R.string.activeTrack, Toast.LENGTH_SHORT).show();
                 return;
             }
             SavedNotes savedNotes = (SavedNotes) navHostFragment.getChildFragmentManager().getFragments().get(0);
             CreateNote createNote = new CreateNote(savedNotes, player);
-            createNote.show(getSupportFragmentManager(), String.valueOf(R.string.createNote)); // TODO language
+            createNote.show(getSupportFragmentManager(), String.valueOf(R.string.createNote));
 
         });
     }

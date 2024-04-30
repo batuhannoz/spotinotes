@@ -22,6 +22,8 @@
     <string name="openSongCancel">Cancel</string>
     <string name="saveLyrics">Are you sure you want to save the lyrics to your note?</string>
     <string name="saveLyricsTitle">Save</string>
+    <string name="lyricsUpdatedInfo">Lyrics added.</string>
+    <string name="lyricsNotFound">Lyrics not found.</string>
     <string name="saveNote">Here\'s a note I made for you while listening to this wonderful song: </string>
     <string name="activeTrack">No Active Track</string>
     <string name="createNote">Create Note</string>

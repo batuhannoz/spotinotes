@@ -15,8 +15,6 @@
         style="@style/text_color"
         android:hint="@string/ara" />
 
-    <!--TODO Language-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_saved_notes"
         android:layout_width="match_parent"

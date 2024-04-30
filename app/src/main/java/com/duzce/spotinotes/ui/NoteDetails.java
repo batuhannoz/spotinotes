@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,15 +109,15 @@ public class NoteDetails extends Fragment {
 
         deleteDetailedNoteButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-            alertDialogBuilder.setMessage(R.string.noteDelete); // TODO language
-            alertDialogBuilder.setPositiveButton(R.string.noteDeleteYes, // TODO language
+            alertDialogBuilder.setMessage(R.string.noteDelete);
+            alertDialogBuilder.setPositiveButton(R.string.noteDeleteYes, //
                     (arg0, arg1) -> {
                         repository.deleteNote(note);
                         getActivity().getOnBackPressedDispatcher().onBackPressed();
-                        Toast.makeText(getContext(), R.string.noteDeleteTitle, Toast.LENGTH_SHORT).show(); // TODO language
+                        Toast.makeText(getContext(), R.string.noteDeleteTitle, Toast.LENGTH_SHORT).show();
                     }
             );
-            alertDialogBuilder.setNegativeButton(R.string.noteDeleteCancel, (dialog, which) -> dialog.dismiss()); // TODO language
+            alertDialogBuilder.setNegativeButton(R.string.noteDeleteCancel, (dialog, which) -> dialog.dismiss());
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         });
@@ -129,7 +130,7 @@ public class NoteDetails extends Fragment {
 
         editNoteButton.setOnClickListener(v -> {
             UpdateNote updateNote = new UpdateNote(note, repository, this);
-            updateNote.show(getParentFragmentManager(), String.valueOf(R.string.noteUpdatedInfo)); // TODO language
+            updateNote.show(getParentFragmentManager(), String.valueOf(R.string.noteUpdatedInfo));
         });
 
 
@@ -159,8 +160,8 @@ public class NoteDetails extends Fragment {
 
         openWithSpotifyButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-            alertDialogBuilder.setMessage(R.string.openSong); // TODO language
-            alertDialogBuilder.setPositiveButton(R.string.openSongTitle, // TODO language
+            alertDialogBuilder.setMessage(R.string.openSong);
+            alertDialogBuilder.setPositiveButton(R.string.openSongTitle,
                     (arg0, arg1) -> {
                         final String spotifyContent = note.getTrackUrl();
                         final String branchLink = "https://spotify.link/content_linking?~campaign=" + getContext().getPackageName() + "&$deeplink_path=" + spotifyContent + "&$fallback_url=" + spotifyContent;
@@ -169,28 +170,35 @@ public class NoteDetails extends Fragment {
                         startActivity(intent);
                     }
             );
-            alertDialogBuilder.setNegativeButton(R.string.openSongCancel, (dialog, which) -> dialog.dismiss()); // TODO language
+            alertDialogBuilder.setNegativeButton(R.string.openSongCancel, (dialog, which) -> dialog.dismiss());
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         });
 
         openLyricsButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-            alertDialogBuilder.setMessage(R.string.saveLyrics); // TODO language
-            alertDialogBuilder.setPositiveButton(R.string.saveLyricsTitle, // TODO language
+            alertDialogBuilder.setMessage(R.string.saveLyrics);
+            alertDialogBuilder.setPositiveButton(R.string.saveLyricsTitle,
                     (arg0, arg1) -> {
                         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                                 .permitAll().build();
                         StrictMode.setThreadPolicy(policy);
                         LyricsApi.LyricsResponse response = LyricsApi.LyricsMatcher(note.getTrackName(), note.getArtistName());
-                        note.setNotedLyrics(response.getMessage().getBody().getLyrics().getLyrics_body());
-                        lyricsTextView.setText(note.getNotedLyrics());
-                        openLyricsButton.setVisibility(View.INVISIBLE);
-                        openLyricsButton.setClickable(false);
-                        repository.updateNote(note);
+                        if (!response.getMessage().getBody().getLyrics().getLyrics_body().isEmpty()) {
+                            note.setNotedLyrics(response.getMessage().getBody().getLyrics().getLyrics_body());
+                            lyricsTextView.setText(note.getNotedLyrics());
+                            openLyricsButton.setVisibility(View.INVISIBLE);
+                            openLyricsButton.setClickable(false);
+                            repository.updateNote(note);
+                            Toast.makeText(getContext(), R.string.lyricsUpdatedInfo, Toast.LENGTH_SHORT).show();
+                        } else {
+                            openLyricsButton.setVisibility(View.INVISIBLE);
+                            openLyricsButton.setClickable(false);
+                            Toast.makeText(getContext(), R.string.lyricsNotFound, Toast.LENGTH_SHORT).show();
+                        }
                     }
             );
-            alertDialogBuilder.setNegativeButton(R.string.openSongCancel, (dialog, which) -> dialog.dismiss()); // TODO language
+            alertDialogBuilder.setNegativeButton(R.string.openSongCancel, (dialog, which) -> dialog.dismiss());
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         });
@@ -200,7 +208,7 @@ public class NoteDetails extends Fragment {
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT,
                     note.getTrackName()+" - "+note.getArtistName()+": ("+note.getTrackUrl()+") "+
-                    R.string.saveNote + note.getNote() // TODO language
+                    R.string.saveNote + note.getNote()
             );
             sendIntent.setType("text/plain");
 

@@ -25,6 +25,8 @@
     <string name="openSongCancel">İptal</string>
     <string name="saveLyrics">Şarkı sözlerini notunuza kaydetmek istediğinizden emin misiniz?</string>
     <string name="saveLyricsTitle">Kaydet</string>
+    <string name="lyricsUpdatedInfo">Şarkı sözleri eklendi.</string>
+    <string name="lyricsNotFound">Şarkı sözleri bulunamadı.</string>
     <string name="saveNote">İste bu harika sarkiyi dinlerken senin icin aldigim not: </string>
     <string name="activeTrack">Aktif Parça Yok!</string>
     <string name="createNote">Not Oluştur</string>
