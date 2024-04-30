@@ -4,11 +4,7 @@
     <string name="saved_notes">Saved Notes</string>
     <string name="profile_image_description">Profile Image</string>
 
-    <string-array name="languages_array">
-        <item>@string/prompt_language</item>
-        <item>@string/english</item>
-        <item>@string/turkce</item>
-    </string-array>
+
 
     <string name="noteDelete">Are you sure you want to delete this note?</string>
     <string name="noteDeleteTitle">Note deleted successfully</string>
@@ -41,6 +37,7 @@
     <string name="english">English</string>
     <string name="turkce">Turkish</string>
     <string name="SelectedLanguage">Selected Language: </string>
+
 
 
 </resources>

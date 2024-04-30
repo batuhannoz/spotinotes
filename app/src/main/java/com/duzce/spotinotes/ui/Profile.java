@@ -60,10 +60,10 @@ public class Profile extends Fragment {
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
         String selectedLanguage = sharedPreferences.getString(selectedLanguageKey, "en");
 
-        if (selectedLanguage.equals("tr")) {
-            setLocale("tr");
-        } else {
+        if (selectedLanguage.equals("en")) {
             setLocale("en");
+        } else {
+            setLocale("tr");
         }
         final String[] languagesArray = getResources().getStringArray(R.array.languages_array);
 

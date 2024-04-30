@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="languages_array">
+        <item>@string/prompt_language</item>
+        <item>@string/english</item>
+        <item>@string/turkce</item>
+    </string-array>
+</resources>
