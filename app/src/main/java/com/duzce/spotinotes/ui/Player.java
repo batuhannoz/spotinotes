@@ -29,6 +29,7 @@ import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import kotlin.Unit;
@@ -37,8 +38,6 @@ public class Player extends Fragment {
     private ImageView CurrentTrackImage;
     private TextView CurrentTrackText;
     private MaterialButton PlayPauseButton;
-    private MaterialButton PreviousButton;
-    private MaterialButton NextButton;
     private boolean IsPlaying = false;
     public CurrentlyPlayingType currentlyPlayingType = null;
     public Playable currentlyPlayingItem = null;
@@ -51,14 +50,14 @@ public class Player extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        CurrentTrackText = getView().findViewById(R.id.current_track_text);
+        CurrentTrackText = requireView().findViewById(R.id.current_track_text);
         CurrentTrackText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         CurrentTrackText.setSelected(true);
         CurrentTrackText.setSingleLine(true);
-        CurrentTrackImage = getView().findViewById(R.id.current_track_image);
-        PlayPauseButton = getView().findViewById(R.id.play_pause_track_button);
-        PreviousButton = getView().findViewById(R.id.previous_track_button);
-        NextButton = getView().findViewById(R.id.next_track_button);
+        CurrentTrackImage = requireView().findViewById(R.id.current_track_image);
+        PlayPauseButton = requireView().findViewById(R.id.play_pause_track_button);
+        MaterialButton previousButton = requireView().findViewById(R.id.previous_track_button);
+        MaterialButton nextButton = requireView().findViewById(R.id.next_track_button);
 
         // Set click listeners for player
         PlayPauseButton.setOnClickListener(v -> {
@@ -84,7 +83,7 @@ public class Player extends Fragment {
                 });
             }
         });
-        PreviousButton.setOnClickListener(v ->
+        previousButton.setOnClickListener(v ->
                 MainActivity.spotifyApi.getPlayer().skipBehind(null, new SpotifyContinuation<String>() {
                     @Override
                     public void onSuccess(String s) {RefreshPlayer();}
@@ -94,7 +93,7 @@ public class Player extends Fragment {
                     }
                 })
         );
-        NextButton.setOnClickListener(v ->
+        nextButton.setOnClickListener(v ->
                 MainActivity.spotifyApi.getPlayer().skipForward(null, new SpotifyContinuation<String>() {
                     @Override
                     public void onSuccess(String s) {RefreshPlayer();}
@@ -122,6 +121,7 @@ public class Player extends Fragment {
                     public void onSuccess(CurrentlyPlayingObject ctx) {
                         currentlyPlayingItem = ctx.getItem();
                         try {
+                            assert ctx.getItem() != null;
                             if (ctx.getItem().getType().equals("track")) {
                                 currentlyPlayingType = CurrentlyPlayingType.Track;
                                 Track t = (Track) currentlyPlayingItem;

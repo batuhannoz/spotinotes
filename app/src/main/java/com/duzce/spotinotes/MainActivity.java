@@ -23,6 +23,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.Objects;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         spotifyApi = new SpotifyClientApi(
                 null,
                 null,
-                new Token(getAccessToken(this), "Bearer", 3600, null, null),
+                new Token(Objects.requireNonNull(getAccessToken(this)), "Bearer", 3600, null, null),
                 new SpotifyApiOptions()
                 );
 
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_saved_notes)
                 .build();
         navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_activity_fragment_container);
+        assert navHostFragment != null;
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -81,12 +84,13 @@ public class MainActivity extends AppCompatActivity {
 
         fab.setOnClickListener(v -> {
             if (player.currentlyPlayingType == null) {
-                Toast.makeText(getApplicationContext(), "No Active Track", Toast.LENGTH_SHORT).show(); // TODO language
+                Toast.makeText(getApplicationContext(), R.string.activeTrack, Toast.LENGTH_SHORT).show(); // TODO language
                 return;
             }
             SavedNotes savedNotes = (SavedNotes) navHostFragment.getChildFragmentManager().getFragments().get(0);
             CreateNote createNote = new CreateNote(savedNotes, player);
-            createNote.show(getSupportFragmentManager(), "Create Note"); // TODO language
+            createNote.show(getSupportFragmentManager(), String.valueOf(R.string.createNote)); // TODO language
+
         });
     }
 

@@ -108,15 +108,15 @@ public class NoteDetails extends Fragment {
 
         deleteDetailedNoteButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-            alertDialogBuilder.setMessage("Are you sure you want to delete this note?"); // TODO language
-            alertDialogBuilder.setPositiveButton("Yes", // TODO language
+            alertDialogBuilder.setMessage(R.string.noteDelete); // TODO language
+            alertDialogBuilder.setPositiveButton(R.string.noteDeleteYes, // TODO language
                     (arg0, arg1) -> {
                         repository.deleteNote(note);
                         getActivity().getOnBackPressedDispatcher().onBackPressed();
-                        Toast.makeText(getContext(), "Note deleted successfully", Toast.LENGTH_SHORT).show(); // TODO language
+                        Toast.makeText(getContext(), R.string.noteDeleteTitle, Toast.LENGTH_SHORT).show(); // TODO language
                     }
             );
-            alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss()); // TODO language
+            alertDialogBuilder.setNegativeButton(R.string.noteDeleteCancel, (dialog, which) -> dialog.dismiss()); // TODO language
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         });
@@ -129,8 +129,9 @@ public class NoteDetails extends Fragment {
 
         editNoteButton.setOnClickListener(v -> {
             UpdateNote updateNote = new UpdateNote(note, repository, this);
-            updateNote.show(getParentFragmentManager(), "Update Note"); // TODO language
+            updateNote.show(getParentFragmentManager(), String.valueOf(R.string.noteUpdatedInfo)); // TODO language
         });
+
 
         Picasso
                 .get()
@@ -158,8 +159,8 @@ public class NoteDetails extends Fragment {
 
         openWithSpotifyButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-            alertDialogBuilder.setMessage("You will be directed to the spotify application to open the song."); // TODO language
-            alertDialogBuilder.setPositiveButton("Redirect", // TODO language
+            alertDialogBuilder.setMessage(R.string.openSong); // TODO language
+            alertDialogBuilder.setPositiveButton(R.string.openSongTitle, // TODO language
                     (arg0, arg1) -> {
                         final String spotifyContent = note.getTrackUrl();
                         final String branchLink = "https://spotify.link/content_linking?~campaign=" + getContext().getPackageName() + "&$deeplink_path=" + spotifyContent + "&$fallback_url=" + spotifyContent;
@@ -168,15 +169,15 @@ public class NoteDetails extends Fragment {
                         startActivity(intent);
                     }
             );
-            alertDialogBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()); // TODO language
+            alertDialogBuilder.setNegativeButton(R.string.openSongCancel, (dialog, which) -> dialog.dismiss()); // TODO language
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         });
 
         openLyricsButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-            alertDialogBuilder.setMessage("Are you sure you want to save the lyrics to your note?"); // TODO language
-            alertDialogBuilder.setPositiveButton("Save", // TODO language
+            alertDialogBuilder.setMessage(R.string.saveLyrics); // TODO language
+            alertDialogBuilder.setPositiveButton(R.string.saveLyricsTitle, // TODO language
                     (arg0, arg1) -> {
                         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                                 .permitAll().build();
@@ -189,7 +190,7 @@ public class NoteDetails extends Fragment {
                         repository.updateNote(note);
                     }
             );
-            alertDialogBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()); // TODO language
+            alertDialogBuilder.setNegativeButton(R.string.openSongCancel, (dialog, which) -> dialog.dismiss()); // TODO language
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         });
@@ -199,7 +200,7 @@ public class NoteDetails extends Fragment {
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT,
                     note.getTrackName()+" - "+note.getArtistName()+": ("+note.getTrackUrl()+") "+
-                    "Here's a note I made for you while listening to this wonderful song: "+ note.getNote() // TODO language
+                    R.string.saveNote + note.getNote() // TODO language
             );
             sendIntent.setType("text/plain");
 

@@ -42,7 +42,7 @@ public class CreateNote extends DialogFragment {
         createButton.setOnClickListener(v -> {
             String note = noteText.getText().toString();
             if (note.isEmpty()) {
-                Toast.makeText(getContext(), "Note field cannot be empty", Toast.LENGTH_SHORT).show(); // TODO language
+                Toast.makeText(getContext(), R.string.noteCreatedInfo, Toast.LENGTH_SHORT).show(); // TODO language
                 return;
             }
             if (player.currentlyPlayingType == CurrentlyPlayingType.Track) {
@@ -64,7 +64,7 @@ public class CreateNote extends DialogFragment {
                         currentDateTime
                 ));
                 getDialog().dismiss();
-                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show(); // TODO language
+                Toast.makeText(getContext(), R.string.noteCreatedTitle, Toast.LENGTH_SHORT).show(); // TODO language
             } else if (player.currentlyPlayingType == CurrentlyPlayingType.Episode) {
                 Episode e = (Episode) player.currentlyPlayingItem;
                 Date currentDate = new Date();
@@ -84,7 +84,7 @@ public class CreateNote extends DialogFragment {
                         currentDateTime
                 ));
                 getDialog().dismiss();
-                Toast.makeText(getContext(), "Note Created", Toast.LENGTH_SHORT).show(); // TODO language
+                Toast.makeText(getContext(), R.string.noteCreatedTitle, Toast.LENGTH_SHORT).show(); // TODO language
             }
         });
         cancelButton.setOnClickListener(v -> getDialog().dismiss());

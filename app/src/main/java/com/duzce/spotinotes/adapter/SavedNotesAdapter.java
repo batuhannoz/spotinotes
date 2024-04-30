@@ -25,11 +25,11 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class SavedNotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
-    private Context context;
+    private final Context context;
 
     public List<Note> noteList;
 
-    private NoteRepository repository;
+    private final NoteRepository repository;
 
     public SavedNotesAdapter(Context context, List<Note> noteList) {
         this.context = context;
@@ -62,16 +62,16 @@ public class SavedNotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         holder.noteTextView.setText(note.getNote());
         holder.deleteNoteButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-            alertDialogBuilder.setMessage("Are you sure you want to delete this note?"); // TODO language
-            alertDialogBuilder.setPositiveButton("Yes", // TODO language
+            alertDialogBuilder.setMessage(R.string.noteDelete); // TODO language
+            alertDialogBuilder.setPositiveButton(R.string.noteDeleteYes, // TODO language
                     (arg0, arg1) -> {
                         repository.deleteNote(note);
                         noteList.remove(holder.getLayoutPosition());
                         notifyItemRemoved(holder.getLayoutPosition());
-                        Toast.makeText(context, "Note deleted successfully", Toast.LENGTH_SHORT).show(); // TODO language
+                        Toast.makeText(context, R.string.noteDeleteTitle, Toast.LENGTH_SHORT).show(); // TODO language
                     }
             );
-            alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss()); // TODO language
+            alertDialogBuilder.setNegativeButton(R.string.noteDeleteCancel, (dialog, which) -> dialog.dismiss()); // TODO language
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         });
