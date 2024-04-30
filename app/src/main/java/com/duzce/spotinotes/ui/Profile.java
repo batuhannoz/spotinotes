@@ -1,6 +1,9 @@
 package com.duzce.spotinotes.ui;
 
+import static androidx.core.app.ActivityCompat.recreate;
+
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -24,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.adamratzman.spotify.javainterop.SpotifyContinuation;
@@ -33,6 +37,7 @@ import com.duzce.spotinotes.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletionException;
 
@@ -43,50 +48,49 @@ public class Profile extends Fragment {
     private TextView EmailText;
     private TextView DisplayNameText;
     private ToggleButton ToggleDarkMode;
-    private Spinner LanguageSpinner;
     private SharedPreferences sharedPreferences;
-    private String selectedLanguageKey = "selected_language";
+    private final String selectedLanguageKey = "selected_language";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        // Dil seçimini kontrol edin ve uygulamayı o dilde gösterin
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        String selectedLanguage = sharedPreferences.getString(selectedLanguageKey, "en"); // Varsayılan olarak İngilizce
+
+        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        String selectedLanguage = sharedPreferences.getString(selectedLanguageKey, "en");
 
         if (selectedLanguage.equals("tr")) {
             setLocale("tr");
         } else {
             setLocale("en");
         }
+        final String[] languagesArray = getResources().getStringArray(R.array.languages_array);
 
-        // Spinner'ı bulma ve dil seçeneklerini ayarlama
-        LanguageSpinner = rootView.findViewById(R.id.language_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, new String[]{"English", "Türkçe"});
+        Spinner languageSpinner = rootView.findViewById(R.id.language_spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, languagesArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        LanguageSpinner.setAdapter(adapter);
+        languageSpinner.setAdapter(adapter);
 
-        // Dil seçildiğinde yapılacak işlemi belirleyen listener
-        LanguageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedLanguage = (String) parent.getItemAtPosition(position);
-                if (selectedLanguage.equals("English")) {
+                if (selectedLanguage.equals(getString(R.string.english))) {
                     changeLanguage("en");
-                } else if (selectedLanguage.equals("Türkçe")) {
+                    restartActivity();
+                } else if (selectedLanguage.equals(getString(R.string.turkce))) {
                     changeLanguage("tr");
+                    restartActivity();
                 }
-            }
+                refreshUI();
 
+            }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Bir şey seçilmediğinde yapılacak işlem
+
             }
         });
-
-        // Geri kalan kod
         return rootView;
     }
 
@@ -95,17 +99,30 @@ public class Profile extends Fragment {
         editor.putString(selectedLanguageKey, languageCode);
         editor.apply();
         setLocale(languageCode);
-        // Ekranı yeniden yükleme gibi gerekli işlemleri yapabilirsiniz
+
+        String selectedLanguage = languageCode.equals("en") ? getString(R.string.english) : getString(R.string.turkce);
+        Toast.makeText(getContext(), requireContext().getText(R.string.SelectedLanguage) + selectedLanguage, Toast.LENGTH_SHORT).show();
+
+        refreshUI();
+    }
+
+    private void refreshUI() {
+
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
+    }
+    private void restartActivity() {
+        Intent intent = requireActivity().getIntent();
+        requireActivity().finish();
+        startActivity(intent);
     }
 
     private void setLocale(String lang) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        Configuration config = requireContext().getResources().getConfiguration();
+        config.setLocale(locale);
+        requireContext().getResources().updateConfiguration(config, requireContext().getResources().getDisplayMetrics());
     }
 
 

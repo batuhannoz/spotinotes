@@ -57,13 +57,13 @@ public class NoteDetailsAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         holder.noteTextView.setText(note.getNote());
         holder.deleteNoteButton.setOnClickListener(v -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-            alertDialogBuilder.setMessage("Are you sure you want to delete this note?"); // TODO language
+            alertDialogBuilder.setMessage(R.string.noteDelete); // TODO language
             alertDialogBuilder.setPositiveButton("Yes", // TODO language
                     (arg0, arg1) -> {
                         repository.deleteNote(note);
                         noteList.remove(holder.getLayoutPosition());
                         notifyItemRemoved(holder.getLayoutPosition());
-                        Toast.makeText(context, "Note deleted successfully", Toast.LENGTH_SHORT).show(); // TODO language
+                        Toast.makeText(context, R.string.noteDeleteTitle, Toast.LENGTH_SHORT).show(); // TODO language
                     }
             );
             alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss()); // TODO language
@@ -83,5 +83,7 @@ public class NoteDetailsAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     public int getItemCount() {
         return noteList.size();
     }
+
+
 
 }

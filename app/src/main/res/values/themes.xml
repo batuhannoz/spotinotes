@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Spotinotes" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
+        <item name="colorPrimary">#065126</item>
+
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/black</item>
@@ -13,6 +15,9 @@
 
     <style name="screen">
         <item name="android:background">#a5b8a2</item>
+    </style>
+    <style name="screen2">
+        <item name="android:background">#3E5E38</item>
     </style>
     <style name="player">
         <item name="android:background">#065126</item>

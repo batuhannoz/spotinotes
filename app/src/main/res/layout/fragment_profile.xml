@@ -89,7 +89,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Language"
+            android:text="@string/language"
             style="@style/text_color"
             android:layout_marginStart="18sp"
             android:textSize="16sp"
@@ -97,18 +97,14 @@
 
         <Spinner
             android:id="@+id/language_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="286dp"
+            android:layout_height="match_parent"
+            android:entries="@array/languages_array"
+            android:prompt="@string/prompt_language"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
-
-
-
-    <!--TODO Language Spinner Turkish/English-->
-
-    <!--TODO Dark/Light mode switch-->
 
 </LinearLayout>

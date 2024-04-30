@@ -16,6 +16,9 @@
     <style name="screen">
         <item name="android:background">@color/spotify_dark_grey</item>
     </style>
+    <style name="screen2">
+        <item name="android:background">#3E5E38</item>
+    </style>
     <style name="player">
         <item name="android:background">@color/spotify_light_grey</item>
     </style>

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">spotinotes</string>
-    <string name="profile">Profile</string>
-    <string name="saved_notes">Saved Notes</string>
-    <string name="profile_image_description">Profile Image</string>
+    <string name="profile">Profil</string>
+    <string name="saved_notes">Kaydedilmiş Notlar</string>
+    <string name="profile_image_description">Profil Resmi</string>
 
 
-    <string-array name="languages">
-        <item name="English">İngilizce</item>
-        <item name="Turkish">Türkçe</item>
+    <string-array name="languages_array">
+        <item>@string/prompt_language</item>
+        <item>@string/english</item>
+        <item>@string/turkce</item>
     </string-array>
 
 
@@ -31,10 +32,18 @@
     <string name="ara">Ara...</string>
     <string name="dark_mode">Koyu Tema</string>
     <string name="saved_notes_with_same_song_or_artist">Aynı şarkı veya sanatçı ile kaydedilmiş notlar</string>
-    <string name="not">Not</string>
+    <string name="not">Not Giriniz</string>
     <string name="cancel">İptal</string>
     <string name="save">Kaydet</string>
     <string name="log_in_with_spotify">Spotify ile giriş yapın</string>
+    <string name="language">Dil</string>
+
+    <string name="prompt_language">Dil Ayarını Seçiniz</string>
+    <string name="english">İngilizce</string>
+    <string name="turkce">Türkçe</string>
+    <string name="SelectedLanguage">Seçilen Dil: </string>
+
+
 
 
 </resources>

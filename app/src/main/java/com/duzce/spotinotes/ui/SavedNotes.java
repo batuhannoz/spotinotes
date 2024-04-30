@@ -35,24 +35,24 @@ public class SavedNotes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         repository = new NoteRepository(getContext());
-        return inflater.inflate(R.layout.fragment_saved_notes, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_saved_notes, container, false);
+        recyclerView = rootView.findViewById(R.id.recycler_view_saved_notes);
+        searchEditText = rootView.findViewById(R.id.searchEditText);
+        return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        recyclerView = getView().findViewById(R.id.recycler_view_saved_notes);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-
         List<Note> noteList = repository.getAllNotes();
         adapter = new SavedNotesAdapter(getContext(), noteList);
         recyclerView.setAdapter(adapter);
 
-        searchEditText = getView().findViewById(R.id.searchEditText);
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -87,5 +87,4 @@ public class SavedNotes extends Fragment {
         adapter.notifyItemInserted(adapter.getItemCount());
         recyclerView.smoothScrollToPosition(adapter.getItemCount());
     }
-
 }

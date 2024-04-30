@@ -7,8 +7,7 @@
     style="@style/screen"
     android:orientation="vertical">
 
-    <EditText
-
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +15,7 @@
         style="@style/text_color"
         android:hint="@string/ara" />
 
-  <!--TODO Language-->
+    <!--TODO Language-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_saved_notes"
