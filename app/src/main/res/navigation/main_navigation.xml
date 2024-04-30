@@ -7,11 +7,11 @@
     <fragment
         android:id="@+id/navigation_saved_notes"
         android:name="com.duzce.spotinotes.ui.SavedNotes"
-        android:label="Saved Notes"/>
+        android:label="@string/saved_notes"/>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.duzce.spotinotes.ui.Profile"
-        android:label="Profile"/>
+        android:label="@string/profile"/>
 
 </navigation>
